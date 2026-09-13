@@ -1,61 +1,407 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CAGNEX — Credit Intelligence Workbench</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="shell">
-    <aside class="rail">
-      <div class="logo"><span>◈</span><b>CAGNEX</b><small>Credit intelligence</small></div>
-      <div class="workspace"><span class="workspace-mark">AP</span><div><b>Apex Credit Partners</b><small>Underwriting desk</small></div><span>⌄</span></div>
-      <nav>
-        <small class="nav-label">WORKSPACE</small>
-        <a class="nav-link active" href="#pipeline"><span>▦</span> Deal pipeline <i>6</i></a>
-        <a class="nav-link" href="#workbench"><span>◫</span> Workbench</a>
-        <a class="nav-link" href="#covenants"><span>◇</span> Covenant library</a>
-        <a class="nav-link" href="#audit"><span>◷</span> Audit log</a>
-        <a class="nav-link" href="#exports"><span>⇩</span> Export vault</a>
-        <small class="nav-label second">ADMINISTRATION</small>
-        <a class="nav-link" href="#"><span>♙</span> Team & access</a>
-        <a class="nav-link" href="#"><span>⚙</span> Settings</a>
-      </nav>
-      <div class="rail-foot"><div class="security"><span>●</span><div><b>Secure workspace</b><small>ZDR controls active</small></div></div><div class="user"><span>AM</span><div><b>Anurag Mishra</b><small>Managing Director</small></div><strong>•••</strong></div></div>
-    </aside>
+<!DOCTYPE html>
 
-    <main class="main">
-      <header class="topbar">
-        <div class="crumbs"><span>Deal Rooms</span><b>/</b><strong id="crumbTitle">Pipeline</strong></div>
-        <div class="top-actions"><span class="live-dot"></span><span class="sync-label">All systems operational</span><button class="ghost">⌕ <span>Search</span></button><button class="icon">◌<i></i></button><button class="new-deal" id="newDeal">+ New deal room</button></div>
-      </header>
-
-      <section id="pipeline" class="view active-view">
-        <div class="page-head"><div><div class="eyebrow">MONDAY · 14 SEP 2026</div><h1>Deal pipeline</h1><p>Move from source documents to an investment-ready decision.</p></div><div class="head-stats"><div><b>$1.24B</b><span>Capital under review</span></div><div><b>18</b><span>Open flags</span></div></div></div>
-        <div class="filter-row"><div class="segmented"><button class="selected">All deals <b>6</b></button><button>Parsing <b>2</b></button><button>Needs review <b>3</b></button><button>Complete <b>1</b></button></div><button class="filter">☷ Filters</button><button class="view-toggle">▤　▦</button></div>
-        <div class="deal-table">
-          <div class="table-head"><span>DEAL / BORROWER</span><span>FACILITY</span><span>STATUS</span><span>RISK SIGNALS</span><span>OWNER</span><span>UPDATED</span><span></span></div>
-          <button class="deal-row selected-row" data-deal="apollo"><span class="deal-name"><b>Project Apollo</b><small>Northstar Industrial Holdings · TLB</small></span><span class="mono">$250.0M</span><span><em class="status parsing">● Parsing 78%</em></span><span><em class="flag warning">2 warnings</em><em class="flag critical">1 critical</em></span><span class="avatar small-avatar">AC</span><span class="muted">2 min ago</span><span>›</span></button>
-          <button class="deal-row" data-deal="borealis"><span class="deal-name"><b>Project Borealis</b><small>Meridian Software Group · RCF</small></span><span class="mono">$90.0M</span><span><em class="status review">● Needs review</em></span><span><em class="flag warning">3 warnings</em></span><span class="avatar blue">JM</span><span class="muted">18 min ago</span><span>›</span></button>
-          <button class="deal-row" data-deal="comet"><span class="deal-name"><b>Project Comet</b><small>Atlas Consumer Brands · Syndicated</small></span><span class="mono">$500.0M</span><span><em class="status complete">● Complete</em></span><span><em class="flag clean">✓ No open flags</em></span><span class="avatar gold">RK</span><span class="muted">Yesterday</span><span>›</span></button>
-          <button class="deal-row" data-deal="everest"><span class="deal-name"><b>Project Everest</b><small>Summit Logistics · ABL</small></span><span class="mono">$175.0M</span><span><em class="status queued">● Queued</em></span><span><em class="flag muted-flag">Awaiting docs</em></span><span class="avatar purple">LT</span><span class="muted">Yesterday</span><span>›</span></button>
-        </div>
-        <div class="bottom-panels"><div class="panel activity-panel"><div class="panel-title"><div><b>Recent activity</b><small>Immutable events across your workspace</small></div><a href="#audit">View audit log →</a></div><div class="activity-line"><span class="activity-icon green-bg">✓</span><div><b>Anurag Mishra approved leverage covenant override</b><small>Project Apollo · 7.02(b) · 2 minutes ago</small></div><em>Approved</em></div><div class="activity-line"><span class="activity-icon blue-bg">↗</span><div><b>Extraction completed for 42 financial line items</b><small>Project Comet · 18 minutes ago</small></div><em>System</em></div><div class="activity-line"><span class="activity-icon amber-bg">!</span><div><b>New document version detected</b><small>Project Borealis · Credit Agreement · 1 hour ago</small></div><em>Review</em></div></div><div class="panel insight-panel"><span class="eyebrow">UNDERWRITING SIGNAL</span><h2>3 deals need your attention.</h2><p>Two covenant thresholds are approaching breach under the downside scenario.</p><button class="dark-button" id="openWorkbench">Review highest risk →</button></div></div>
-      </section>
-
-      <section id="workbench" class="view">
-        <div class="workbench-head"><div><div class="eyebrow">DEAL ROOM / PROJECT APOLLO</div><h1>Credit Facility Agreement <span class="badge parsing">Parsing 78%</span></h1><p>Northstar Industrial Holdings · $250.0M Term Loan B · Last synced 2 min ago</p></div><div class="work-actions"><button class="outline-btn" id="validateBtn">✓ Run compliance check</button><button class="primary-btn" id="exportBtn">⇩ Export IC memo</button></div></div>
-        <div class="health-strip"><div><span class="health-icon green-bg">✓</span><b>Math validated</b><small>42 / 42 checks passed</small></div><div><span class="health-icon amber-bg">!</span><b>3 review flags</b><small>1 critical · 2 warnings</small></div><div><span class="health-icon blue-bg">↗</span><b>6 documents</b><small>1,248 pages indexed</small></div><div class="presence"><span class="avatar">AM</span><span class="avatar blue">JM</span><span>+2 reviewing</span></div></div>
-        <div class="workbench"><div class="evidence"><div class="pane-bar"><b>Evidence canvas</b><span class="doc-tab active">Credit_Agreement_Final.pdf</span><span class="doc-tab">Borrower_Financials.xlsx</span><button>⌕</button><button>⋮</button></div><div class="page-tools"><span>Pages <b>113 / 248</b></span><button>−</button><span>100%</span><button>+</button><button>Fit</button></div><div class="document"><div class="doc-page"><div class="doc-meta">NORTHSTAR INDUSTRIAL HOLDINGS, INC. <span>Page 114</span></div><h3>SECTION 7.02. FINANCIAL COVENANTS</h3><p><b>(b) Maximum Total Net Leverage Ratio.</b> The Borrower shall not permit the Total Net Leverage Ratio as of the last day of any fiscal quarter ending during any period set forth below to exceed the ratio set forth opposite such period.</p><table><thead><tr><th>Fiscal Quarter Ending</th><th>Maximum Ratio</th></tr></thead><tbody><tr><td>September 30, 2026</td><td><mark>4.25 to 1.00</mark></td></tr><tr><td>December 31, 2026</td><td>4.00 to 1.00</td></tr><tr><td>March 31, 2027</td><td>3.75 to 1.00</td></tr></tbody></table><p><b>(c) Interest Coverage Ratio.</b> The Borrower shall not permit the Interest Coverage Ratio to be less than <mark>3.00 to 1.00</mark> as of the last day of any fiscal quarter.</p><div class="source-callout">⌁ Source linked · §7.02(b) · native text · confidence 99.8%</div></div></div><div class="thumbnails"><span class="thumb active">113</span><span class="thumb">114</span><span class="thumb">115</span><span class="thumb">116</span><span class="thumb">117</span><span class="thumb">118</span></div></div><div class="intelligence"><div class="intel-tabs"><button class="active" data-tab="covenants">Covenants <b>4</b></button><button data-tab="financials">Financials</button><button data-tab="memo">IC memo</button></div><div class="intel-body" id="covenants"><div class="section-label"><span>FINANCIAL COVENANTS</span><button>＋ Add note</button></div><div class="covenant-card critical-card" data-source="114"><div class="covenant-top"><div><span class="risk-dot red"></span><b>Maximum Total Net Leverage</b><small>Quarterly · ≤ threshold</small></div><span class="flag critical">Critical</span></div><div class="metric-line"><strong>4.25x</strong><span>Actual <b>4.18x</b></span><span class="headroom red-text">1.6% headroom</span></div><div class="bar"><i style="width:98%"></i></div><div class="stress"><span>Base <b class="green-text">4.18x</b></span><span>Downside <b class="amber-text">4.34x</b></span><span>Severe <b class="red-text">4.61x</b></span></div><footer><span>⌁ p.114 · §7.02(b)</span><button class="override" data-covenant="Maximum Total Net Leverage">Override value</button></footer></div><div class="covenant-card"><div class="covenant-top"><div><span class="risk-dot amber"></span><b>Interest Coverage Ratio</b><small>Quarterly · ≥ threshold</small></div><span class="flag warning">Watch</span></div><div class="metric-line"><strong>3.00x</strong><span>Actual <b>3.90x</b></span><span class="headroom green-text">30.0% headroom</span></div><div class="bar"><i class="green-bar" style="width:70%"></i></div><div class="stress"><span>Base <b class="green-text">3.90x</b></span><span>Downside <b class="amber-text">3.22x</b></span><span>Severe <b class="red-text">2.74x</b></span></div><footer><span>⌁ p.114 · §7.02(c)</span><button class="source-btn">View source</button></footer></div><div class="section-label financial-label"><span>RECONCILIATION SNAPSHOT</span><button data-tab-target="financials">View all →</button></div><div class="recon-row"><span>Adjusted EBITDA</span><b>$84.2M</b><span class="arrow">→</span><b class="audited">$79.6M</b><em class="negative">−5.5%</em></div><div class="recon-row"><span>Net debt</span><b>$328.4M</b><span class="arrow">→</span><b class="audited">$331.1M</b><em class="negative">+0.8%</em></div></div><div class="intel-body hidden" id="financials"><div class="section-label"><span>FINANCIAL RECONCILIATION · LTM</span><button>Export CSV</button></div><div class="financial-table"><div><span>GAAP TAG</span><span>REPORTED</span><span>AUDITED</span><span>VARIANCE</span></div><div><b>Revenue</b><span>$612.4M</span><span>$612.4M</span><em class="positive">0.0%</em></div><div><b>Adjusted EBITDA</b><span>$84.2M</span><span>$79.6M</span><em class="negative">−5.5%</em></div><div><b>Net Debt</b><span>$328.4M</span><span>$331.1M</span><em class="negative">+0.8%</em></div><div><b>Cash interest expense</b><span>$21.6M</span><span>$21.6M</span><em class="positive">0.0%</em></div></div><div class="addback"><b>Disputed add-back detected</b><span>Sponsor management fee · $2.4M</span><em>Needs approval</em></div></div><div class="intel-body hidden" id="memo"><div class="section-label"><span>IC MEMO DRAFT</span><button>Edit draft</button></div><div class="memo-draft"><h3>Executive summary</h3><p>Northstar Industrial Holdings is a leading industrial services platform with stable LTM revenue of $612.4M. The proposed $250.0M TLB is currently within covenant, though leverage headroom is narrow and breaches under the downside scenario.</p><h3>Key risks</h3><ul><li>Downside leverage breach at 4.34x vs. 4.25x threshold.</li><li>$2.4M sponsor management fee add-back requires approval.</li></ul></div></div></div></div>
-      </section>
-    </main>
-  </div>
-  <div class="toast" id="toast"></div>
-  <div class="modal-backdrop" id="dealModal" hidden><div class="modal"><button class="close" id="closeDeal">×</button><span class="eyebrow">NEW DEAL ROOM</span><h2>Start a defensible underwriting file.</h2><p>Create the room first. Documents can be added and processed asynchronously.</p><label>Deal name<input id="dealName" placeholder="e.g. Project Orion"></label><label>Facility type<select><option>Term Loan B</option><option>Revolving Credit Facility</option><option>Asset Based Lending</option><option>Syndicated Facility</option></select></label><button class="primary-btn" id="createDeal">Create deal room →</button></div></div>
-  <script src="app.js"></script>
-</body>
-</html>
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-tertiary-fixed-variant":"#004395","on-secondary":"#283043","surface":"#0f131c","background":"#0f131c","surface-container-highest":"#31353f","status-success":"#10B981","primary-fixed-dim":"#b4c5ff","on-secondary-container":"#adb5cd","text-faint":"#475569","surface-container":"#1c1f29","surface-container-low":"#181b25","on-primary-fixed":"#00174b","border-active":"rgba(37, 99, 235, 0.5)","on-error-container":"#ffdad6","surface-container-high":"#262a34","source-highlight-fill":"rgba(37, 99, 235, 0.18)","surface-tint":"#b4c5ff","inverse-on-surface":"#2c303a","primary":"#b4c5ff","status-critical":"#EF4444","outline":"#8d90a0","on-tertiary-container":"#edf0ff","on-surface":"#dfe2ef","secondary":"#bfc6df","on-surface-variant":"#c3c6d7","surface-container-lowest":"#0a0e17","primary-container":"#2563eb","on-primary-container":"#eeefff","secondary-fixed-dim":"#bfc6df","on-secondary-fixed":"#131b2d","surface-variant":"#31353f","tertiary-fixed":"#d8e2ff","tertiary-fixed-dim":"#adc6ff","on-background":"#dfe2ef","surface-bright":"#353943","secondary-container":"#3f465b","outline-variant":"#434655","on-primary-fixed-variant":"#003ea8","surface-panel":"#0D1527","on-secondary-fixed-variant":"#3f465b","error-container":"#93000a","text-muted":"#94A3B8","status-warning":"#F59E0B","secondary-fixed":"#dbe2fb","canvas-base":"#090D16","on-primary":"#002a78","on-tertiary":"#002e6a","border-hairline":"rgba(255, 255, 255, 0.08)","inverse-surface":"#dfe2ef","surface-elevated":"#131C35","on-tertiary-fixed":"#001a42","text-primary":"#F8FAFC","error":"#ffb4ab","primary-fixed":"#dbe1ff","tertiary":"#adc6ff","surface-dim":"#0f131c","tertiary-container":"#0f69dc","on-error":"#690005","inverse-primary":"#0053db"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-xl":"1rem","space-sm":"0.375rem","space-md":"0.5rem","gutter":"0.75rem","margin":"1rem","space-lg":"0.75rem","space-xs":"0.25rem"},"fontFamily":{"display-kpi":["JetBrains Mono"],"badge-label":["JetBrains Mono"],"body-base":["Inter"],"headline-md":["Geist"],"legal-clause":["Inter"],"table-header":["JetBrains Mono"],"body-compact":["Inter"],"data-mono-bold":["JetBrains Mono"],"headline-lg":["Geist"],"data-mono":["JetBrains Mono"],"meta-stamp":["JetBrains Mono"],"body-semibold":["Inter"],"headline-sm":["Geist"]},"fontSize":{"display-kpi":["32px",{"lineHeight":"40px","letterSpacing":"-0.03em","fontWeight":"700"}],"badge-label":["11px",{"lineHeight":"14px","letterSpacing":"0.02em","fontWeight":"600"}],"body-base":["14px",{"lineHeight":"20px","letterSpacing":"-0.006em","fontWeight":"400"}],"headline-md":["18px",{"lineHeight":"24px","letterSpacing":"-0.015em","fontWeight":"600"}],"legal-clause":["13px",{"lineHeight":"20px","fontWeight":"400"}],"table-header":["11px",{"lineHeight":"14px","letterSpacing":"0.06em","fontWeight":"600"}],"body-compact":["12px",{"lineHeight":"16px","fontWeight":"400"}],"data-mono-bold":["13px",{"lineHeight":"18px","letterSpacing":"-0.01em","fontWeight":"700"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"600"}],"data-mono":["13px",{"lineHeight":"18px","letterSpacing":"-0.01em","fontWeight":"500"}],"meta-stamp":["10px",{"lineHeight":"12px","letterSpacing":"0.08em","fontWeight":"500"}],"body-semibold":["14px",{"lineHeight":"20px","letterSpacing":"-0.006em","fontWeight":"600"}],"headline-sm":["15px",{"lineHeight":"20px","letterSpacing":"-0.01em","fontWeight":"600"}]}}}}</script></head><body class="bg-canvas-base text-on-surface font-body-base text-body-base antialiased selection:bg-primary-container selection:text-on-primary-container"><aside class="fixed left-0 top-0 h-full w-60 bg-surface-panel z-50 flex flex-col justify-between shadow-[1px_0_0_rgba(255,255,255,0.06)]"><div class="flex flex-col"><div class="h-12 px-space-lg flex items-center justify-between shadow-[0_1px_0_rgba(255,255,255,0.06)]"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">terminal</span><span class="font-headline-sm text-headline-sm text-text-primary tracking-tight font-bold">DEAL AUDIT</span></div><span class="font-badge-label text-badge-label text-status-success bg-status-success/10 px-1.5 py-0.5 rounded">ACTIVE</span></div><div class="px-space-md py-space-sm"><div class="font-meta-stamp text-meta-stamp text-text-muted px-space-sm uppercase tracking-wider py-1.5">Underwriting Modules</div><nav class="flex flex-col gap-0.5" data-active-classes="bg-surface-elevated text-primary font-semibold shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]"><a class="flex items-center gap-2.5 px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="deal-pipeline" href="#"><span class="material-symbols-outlined text-[16px]">folder_shared</span><span class="font-body-compact text-body-compact">Pipeline Registry</span></a><a aria-current="page" class="flex items-center gap-2.5 px-space-sm py-1.5 rounded transition-all bg-surface-elevated text-primary font-semibold shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]" data-path="dual-pane-workbench" href="#"><span class="material-symbols-outlined text-[16px]">view_column</span><span class="font-body-compact text-body-compact">Evidence Workbench</span></a><a class="flex items-center gap-2.5 px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="covenant-engine" href="#"><span class="material-symbols-outlined text-[16px]">rule</span><span class="font-body-compact text-body-compact">Covenant Engine</span></a><a class="flex items-center gap-2.5 px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="variance-reconciliation" href="#"><span class="material-symbols-outlined text-[16px]">table_chart</span><span class="font-body-compact text-body-compact">Reconciliation Grid</span></a><a class="flex items-center gap-2.5 px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="credit-memorandum" href="#"><span class="material-symbols-outlined text-[16px]">article</span><span class="font-body-compact text-body-compact">IC Memo Generator</span></a></nav></div><div class="px-space-md py-space-sm"><div class="font-meta-stamp text-meta-stamp text-text-muted px-space-sm uppercase tracking-wider py-1.5">Compliance &amp; Vault</div><nav class="flex flex-col gap-0.5" data-active-classes="bg-surface-elevated text-primary font-semibold shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]"><a class="flex items-center gap-2.5 px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="audit-trail" href="#"><span class="material-symbols-outlined text-[16px]">fingerprint</span><span class="font-body-compact text-body-compact">Audit Provenance</span></a><a class="flex items-center gap-2.5 px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="security-and-specs" href="#"><span class="material-symbols-outlined text-[16px]">lock</span><span class="font-body-compact text-body-compact">Security Architecture</span></a><a class="flex items-center gap-2.5 px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="api-and-docs" href="#"><span class="material-symbols-outlined text-[16px]">code</span><span class="font-body-compact text-body-compact">API Schemas</span></a></nav></div></div><div class="p-space-md shadow-[0_-1px_0_rgba(255,255,255,0.06)]"><div class="p-space-sm rounded bg-surface-container-lowest flex items-center justify-between"><div class="flex flex-col"><span class="font-badge-label text-badge-label text-text-muted">CREDIT DESK SYNC</span><span class="font-data-mono text-data-mono text-[11px] text-status-success">● Latency: 18ms</span></div><span class="material-symbols-outlined text-outline text-[16px]">sync_saved_locally</span></div></div></aside><div class="pl-60"><header class="fixed top-0 left-60 right-0 h-12 bg-canvas-base/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.4)] z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-md"><img alt="CAGNEX Brand Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1V60GeAQRCW6WsLYgNAb8juTqXik_FXWBHvecmJxWaK_RWuqPEH7q166PixRgktcZL6VgfDwicSFH9b7wdC1AV7rKq3GVDdUNb-vhtKSOWZUj4a2B3Fp-OWsbosTOFbczfLLZAfttUnOlJpjRDI76nCcW1p-_8efT7q91euHI5SSVcXzMrWDW7eqdDTl5WzDhVjxC0Xe6ytE1Vbrl0I5bj51KLXj8Vs6uSlDAMs7oEMN7Uxba_G2cWzd3g"/><div class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-panel shadow-[0_0_0_1px_rgba(255,255,255,0.06)]"><span class="font-body-compact text-body-compact text-text-primary font-medium">Apex Credit Partners · Underwriting Desk</span><span class="material-symbols-outlined text-outline text-[14px]">expand_more</span></div><div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container-lowest shadow-[0_0_0_1px_rgba(16,185,129,0.25)]"><span class="w-1.5 h-1.5 rounded-full bg-status-success animate-pulse"></span><span class="font-badge-label text-badge-label text-status-success tracking-wide uppercase">SOC 2 · ZDR Active</span></div></div><div class="flex items-center gap-space-sm"><button class="flex items-center gap-space-xs px-2.5 py-1 rounded bg-surface-panel text-text-muted hover:text-on-surface hover:bg-surface-elevated transition-colors shadow-[0_0_0_1px_rgba(255,255,255,0.06)]"><span class="material-symbols-outlined text-[15px]">search</span><span class="font-body-compact text-body-compact hidden md:inline">Global Lookup</span><kbd class="font-meta-stamp text-meta-stamp px-1 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">⌘K</kbd></button><button class="h-8 px-3 rounded bg-primary-container hover:bg-inverse-primary text-on-primary-container font-body-compact text-body-compact font-semibold shadow-[0_0_10px_rgba(37,99,235,0.25)] flex items-center gap-1.5 transition-all"><span class="material-symbols-outlined text-[15px]">add_task</span><span>Run Compliance Check</span></button><div class="flex items-center -space-x-1.5"><span class="w-6 h-6 rounded-full bg-surface-container-high shadow-[0_0_0_1.5px_#090D16] flex items-center justify-center font-meta-stamp text-meta-stamp text-tertiary-fixed">MR</span><span class="w-6 h-6 rounded-full bg-secondary-container shadow-[0_0_0_1.5px_#090D16] flex items-center justify-center font-meta-stamp text-meta-stamp text-on-secondary-container">KT</span></div><div class="relative flex items-center"><button class="p-1 text-on-surface-variant hover:text-on-surface transition-colors relative flex items-center justify-center"><span class="material-symbols-outlined text-[18px]">notifications</span><span class="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-status-critical text-text-primary font-meta-stamp text-[9px] flex items-center justify-center font-bold">3</span></button></div><div class="h-4 w-px bg-surface-variant/40"></div><div class="flex items-center gap-space-xs"><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-[0_0_0_1px_rgba(37,99,235,0.4)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfgKxDhPqh6xIdfNsDO_x7gUWsHyLu7sS_2GnMCTIYQogxYKMdsUK3kFVNdF30pLcyri_1k4dMgY5RwO4Al_oyjI4OZ4__EEwoM8B04QqIi4do49ptJk-lmIqgyKyrYYQCVi_nnooPhBlgW284BiCUpI1bXejK4if-006hgP-DV4zZQtyZYWN7UKPrRNPOO4iOWhMudnGnav6UPnDI-6f2wqbzNjOuKlqaPp9ToZLvDZATg16fkBWV"/><div class="hidden xl:flex flex-col text-left"><span class="font-body-compact text-body-compact font-semibold text-text-primary leading-none">A. Chen</span><span class="font-meta-stamp text-meta-stamp text-text-muted leading-none mt-0.5">Managing Dir.</span></div></div></div></header><main class="w-full pt-12 bg-canvas-base min-h-screen"><div class="flex flex-col w-full">
+<div class="w-full bg-surface-panel shadow-sm px-space-xl py-space-sm flex flex-col gap-space-sm">
+<div class="flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm flex-wrap">
+<nav class="flex items-center gap-1.5 font-meta-stamp text-meta-stamp text-text-muted">
+<span class="hover:text-text-primary transition-colors cursor-pointer">Deal Rooms</span>
+<span class="material-symbols-outlined text-[13px]">chevron_right</span>
+<span class="text-text-primary font-semibold">Project Apollo</span>
+<span class="material-symbols-outlined text-[13px]">chevron_right</span>
+<span class="text-primary bg-primary-container/20 px-1.5 py-0.5 rounded">Credit Facility Agreement Final.pdf</span>
+</nav>
+<div class="h-3.5 w-px bg-surface-variant"></div>
+<div class="flex items-center gap-1.5">
+<span class="font-data-mono text-[12px] text-text-primary font-bold">Northstar Industrial Holdings</span>
+<span class="font-meta-stamp text-meta-stamp text-on-secondary-container bg-secondary-container/40 px-1.5 py-0.5 rounded">$250.0M TLB · SOFR+375</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-space-xs bg-surface-container-lowest px-2 py-1 rounded">
+<div class="flex -space-x-1.5">
+<span class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container font-meta-stamp text-meta-stamp flex items-center justify-center font-bold" title="A. Chen (Managing Director)">AC</span>
+<span class="w-6 h-6 rounded-full bg-surface-container-highest text-on-surface font-meta-stamp text-meta-stamp flex items-center justify-center font-bold" title="J. Miller (VP Credit)">JM</span>
+<span class="w-6 h-6 rounded-full bg-surface-container-high text-on-surface-variant font-meta-stamp text-meta-stamp flex items-center justify-center font-bold" title="S. Vance (Associate)">SV</span>
+<span class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container font-meta-stamp text-[10px] flex items-center justify-center font-bold" title="Desk Observers">+2</span>
+</div>
+<span class="w-2 h-2 rounded-full bg-status-success animate-pulse ml-1"></span>
+</div>
+<button class="h-8 px-2.5 rounded bg-surface-container text-text-primary hover:bg-surface-elevated font-body-compact text-body-compact font-semibold flex items-center gap-1.5 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[15px] text-primary">sync_alt</span>
+<span>Sync to Excel Model</span>
+</button>
+<button class="h-8 px-2.5 rounded bg-surface-container text-text-primary hover:bg-surface-elevated font-body-compact text-body-compact font-semibold flex items-center gap-1.5 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[15px] text-secondary">file_download</span>
+<span>Export IC Memo</span>
+</button>
+<button class="h-8 px-3 rounded bg-primary-container hover:bg-inverse-primary text-on-primary-container font-body-compact text-body-compact font-semibold flex items-center gap-1.5 transition-all shadow-md">
+<span class="material-symbols-outlined text-[15px]">verified</span>
+<span>Run Compliance Check</span>
+</button>
+</div>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-0.5">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container-lowest text-status-success font-badge-label text-badge-label">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success"></span>
+          PARSING 100%
+        </span>
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container-lowest text-status-success font-badge-label text-badge-label">
+<span class="material-symbols-outlined text-[14px]">fact_check</span>
+          MATH VALIDATED (42/42 CHECKS)
+        </span>
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-status-critical/15 text-status-critical font-badge-label text-badge-label">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+          3 REVIEW FLAGS (1 CRITICAL, 2 CAUTION)
+        </span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container text-text-muted font-badge-label text-badge-label">
+<span class="material-symbols-outlined text-[13px]">menu_book</span>
+          1,248 PAGES INDEXED
+        </span>
+</div>
+<div class="flex items-center gap-2 text-text-muted font-meta-stamp text-meta-stamp">
+<span>ZDR ENCLAVE: <strong class="text-text-primary">ACTIVE</strong></span>
+<span>·</span>
+<span>CONFIDENCE INTERVAL: <strong class="text-status-success">99.8%</strong></span>
+</div>
+</div>
+</div>
+<div class="w-full grid grid-cols-1 xl:grid-cols-2 gap-space-md p-space-md">
+<div class="flex flex-col bg-surface-panel rounded-xl overflow-hidden shadow-md">
+<div class="bg-surface-container-lowest px-space-md py-1.5 flex items-center justify-between">
+<div class="flex items-center gap-1">
+<button class="flex items-center gap-1.5 px-3 py-1 rounded bg-surface-elevated text-primary font-body-compact text-body-compact font-medium shadow-sm">
+<span class="material-symbols-outlined text-[14px] text-primary">picture_as_pdf</span>
+<span>Credit_Agreement_Final.pdf</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1 rounded hover:bg-surface-container text-on-surface-variant font-body-compact text-body-compact font-medium transition-colors">
+<span class="material-symbols-outlined text-[14px]">table_chart</span>
+<span>Borrower_Financials_Q2.xlsx</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1 rounded hover:bg-surface-container text-on-surface-variant font-body-compact text-body-compact font-medium transition-colors">
+<span class="material-symbols-outlined text-[14px]">description</span>
+<span>Sponsor_CIM_v3.pdf</span>
+</button>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<button class="p-1 rounded hover:bg-surface-container hover:text-text-primary"><span class="material-symbols-outlined text-[16px]">fullscreen</span></button>
+<button class="p-1 rounded hover:bg-surface-container hover:text-text-primary"><span class="material-symbols-outlined text-[16px]">print</span></button>
+</div>
+</div>
+<div class="bg-surface-container-low px-space-md py-1.5 flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center bg-surface-container-lowest rounded px-1.5 py-0.5 gap-1">
+<button class="text-text-muted hover:text-text-primary"><span class="material-symbols-outlined text-[14px]">arrow_back</span></button>
+<span class="font-data-mono text-[11px] text-text-primary px-1">PAGE 114 / 248</span>
+<button class="text-text-muted hover:text-text-primary"><span class="material-symbols-outlined text-[14px]">arrow_forward</span></button>
+</div>
+<div class="flex items-center bg-surface-container-lowest rounded px-1.5 py-0.5 gap-1 text-text-muted font-meta-stamp text-meta-stamp">
+<button class="hover:text-text-primary"><span class="material-symbols-outlined text-[14px]">zoom_out</span></button>
+<span class="text-text-primary">125%</span>
+<button class="hover:text-text-primary"><span class="material-symbols-outlined text-[14px]">zoom_in</span></button>
+</div>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-2 text-text-muted text-[13px]">search</span>
+<input class="bg-surface-container-lowest text-text-primary pl-6 pr-2 py-0.5 rounded font-body-compact text-[11px] w-36 outline-none focus:bg-surface-elevated" type="text" value="Section 7.02"/>
+</div>
+<span class="font-meta-stamp text-meta-stamp text-status-success bg-status-success/10 px-1.5 py-0.5 rounded">OCR HIGH FI</span>
+</div>
+</div>
+<div class="relative p-space-xl bg-canvas-base flex flex-col gap-space-lg overflow-y-auto max-h-[820px]">
+<div class="flex justify-between items-center text-text-faint font-meta-stamp text-meta-stamp pb-space-sm">
+<span>CREDIT AGREEMENT · EXECUTION COPY · DATED JUNE 14, 2024</span>
+<span>PAGE 114 OF 248</span>
+</div>
+<div class="flex flex-col gap-space-md text-on-surface">
+<div class="flex flex-col gap-0.5">
+<span class="font-meta-stamp text-meta-stamp uppercase tracking-widest text-primary font-bold">ARTICLE VII · NEGATIVE COVENANTS</span>
+<h3 class="font-headline-md text-headline-md text-text-primary font-semibold">SECTION 7.02 Financial Covenants.</h3>
+</div>
+<p class="font-legal-clause text-legal-clause text-on-surface leading-relaxed">
+            So long as any Lender shall have any Commitment hereunder, any Loan or other Obligation hereunder shall remain unpaid or unsatisfied, or any Letter of Credit shall remain outstanding:
+          </p>
+<div class="flex flex-col gap-space-sm pl-space-md">
+<p class="font-legal-clause text-legal-clause leading-relaxed">
+<strong class="text-text-primary">(a) Minimum Liquidity.</strong> The Borrower shall not permit Consolidated Liquidity as of the last day of any calendar month ending after the Closing Date to be less than <span class="text-text-primary font-data-mono">$15,000,000</span>.
+            </p>
+<div class="relative bg-surface-panel p-space-md rounded-lg flex flex-col gap-1 transition-all">
+<div class="flex items-center justify-between">
+<span class="font-legal-clause text-legal-clause font-semibold text-text-primary">(b) Maximum Total Net Leverage Ratio.</span>
+<span class="font-meta-stamp text-meta-stamp text-primary bg-primary-container/20 px-1.5 py-0.5 rounded font-bold">ANCHORED CLAUSE</span>
+</div>
+<p class="font-legal-clause text-legal-clause leading-relaxed text-on-surface">
+                The Borrower shall not permit the Total Net Leverage Ratio as of the last day of any fiscal quarter of the Borrower ending on or after September 30, 2024 to exceed 
+                <span class="relative inline-block px-1.5 py-0.5 rounded font-data-mono-bold text-data-mono-bold text-text-primary bg-primary-container text-on-primary-container cursor-pointer shadow-md" id="leverage-anchor">
+                  4.25 to 1.00
+                  <span class="absolute -top-6 left-1/2 -translate-x-1/2 bg-surface-elevated text-primary font-meta-stamp text-[10px] px-1.5 py-0.5 rounded shadow-lg whitespace-nowrap">
+                    Confidence 99.8% · §7.02(b)
+                  </span>
+</span>; 
+                provided that, following the consummation of any Permitted Acquisition with total cash consideration exceeding $25,000,000, such maximum ratio shall step up to 4.75 to 1.00 for two consecutive test periods.
+              </p>
+<div class="flex items-center gap-2 mt-1 text-primary font-meta-stamp text-meta-stamp">
+<span class="material-symbols-outlined text-[13px]">link</span>
+<span>Bidirectional tether bound to Model Cell D14 (CovenantEngine_TLB)</span>
+</div>
+</div>
+<div class="relative bg-surface-panel p-space-md rounded-lg flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-legal-clause text-legal-clause font-semibold text-text-primary">(c) Minimum Interest Coverage Ratio.</span>
+<span class="font-meta-stamp text-meta-stamp text-status-success bg-status-success/20 px-1.5 py-0.5 rounded font-bold">VERIFIED COVENANT</span>
+</div>
+<p class="font-legal-clause text-legal-clause leading-relaxed text-on-surface">
+                The Borrower shall not permit the Consolidated Interest Coverage Ratio as of the last day of any fiscal quarter ending on or after September 30, 2024 to be less than 
+                <span class="inline-block px-1.5 py-0.5 rounded font-data-mono-bold text-data-mono-bold text-status-success bg-status-success/20 cursor-pointer" id="interest-anchor">
+                  3.00 to 1.00
+                </span>.
+              </p>
+</div>
+<p class="font-legal-clause text-legal-clause leading-relaxed">
+<strong class="text-text-primary">(d) Capital Expenditures.</strong> Permitted Annual Capex shall not exceed <span class="font-data-mono text-text-primary">$18,500,000</span> in the aggregate for FY2024, with up to 50% rollover allowance to the subsequent fiscal period.
+            </p>
+</div>
+<div class="mt-space-md bg-surface-container-lowest p-space-md rounded flex items-center justify-between">
+<div class="flex items-center gap-space-sm font-meta-stamp text-meta-stamp text-text-muted">
+<span>ACTIVE ANCHOR NAVIGATOR:</span>
+<div class="flex items-center gap-1">
+<button class="px-2 py-0.5 rounded bg-surface-panel text-on-surface-variant hover:text-text-primary">p.113</button>
+<button class="px-2 py-0.5 rounded bg-primary-container text-on-primary-container font-bold shadow-sm">p.114 ACTIVE</button>
+<button class="px-2 py-0.5 rounded bg-surface-panel text-on-surface-variant hover:text-text-primary">p.115</button>
+<button class="px-2 py-0.5 rounded bg-surface-panel text-on-surface-variant hover:text-text-primary">p.116</button>
+<button class="px-2 py-0.5 rounded bg-surface-panel text-on-surface-variant hover:text-text-primary">p.117</button>
+</div>
+</div>
+<span class="font-meta-stamp text-meta-stamp text-status-success">SHA-256: 4e82b...c91a VERIFIED</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-space-md">
+<div class="bg-surface-panel rounded-xl p-space-md shadow-md flex flex-col gap-space-md">
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-xs">
+<div class="flex items-center gap-1 bg-surface-container-lowest p-1 rounded">
+<button class="px-3 py-1 rounded bg-surface-elevated text-primary font-body-compact text-body-compact font-semibold shadow-sm">
+              Financial Covenants (4)
+            </button>
+<button class="px-3 py-1 rounded hover:bg-surface-container text-on-surface-variant font-body-compact text-body-compact transition-colors">
+              EBITDA Reconciliation
+            </button>
+<button class="px-3 py-1 rounded hover:bg-surface-container text-on-surface-variant font-body-compact text-body-compact transition-colors">
+              IC Memo Draft
+            </button>
+<button class="px-3 py-1 rounded hover:bg-surface-container text-on-surface-variant font-body-compact text-body-compact transition-colors">
+              Scenario Stress
+            </button>
+</div>
+<span class="font-badge-label text-badge-label text-status-warning bg-status-warning/15 px-2 py-0.5 rounded font-bold">
+            SENSITIVITY: SEVERE
+          </span>
+</div>
+<div class="flex flex-col gap-space-md">
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-status-critical"></span>
+<span class="font-headline-sm text-headline-sm text-text-primary font-bold">Maximum Total Net Leverage Ratio</span>
+<span class="font-meta-stamp text-meta-stamp text-text-muted bg-surface-panel px-1.5 py-0.5 rounded">Quarterly ≤ 4.25x</span>
+</div>
+<span class="font-badge-label text-badge-label text-status-critical bg-status-critical/15 px-2 py-0.5 rounded font-bold">
+                CRITICAL BUFFER (1.6% HEADROOM)
+              </span>
+</div>
+<div class="grid grid-cols-3 gap-space-sm bg-surface-panel p-space-sm rounded">
+<div class="flex flex-col">
+<span class="font-meta-stamp text-meta-stamp text-text-muted">AGREEMENT CEILING</span>
+<span class="font-display-kpi text-[20px] text-text-primary leading-tight">4.25x</span>
+<span class="font-meta-stamp text-meta-stamp text-text-faint">Legal Cap §7.02(b)</span>
+</div>
+<div class="flex flex-col">
+<span class="font-meta-stamp text-meta-stamp text-text-muted">ACTUAL LTM (AUDITED)</span>
+<span class="font-display-kpi text-[20px] text-status-warning leading-tight">4.18x</span>
+<span class="font-meta-stamp text-meta-stamp text-status-critical font-bold">+0.07x Headroom remaining</span>
+</div>
+<div class="flex flex-col">
+<span class="font-meta-stamp text-meta-stamp text-text-muted">STRESS SIMULATION</span>
+<span class="font-display-kpi text-[20px] text-status-critical leading-tight">4.61x</span>
+<span class="font-meta-stamp text-meta-stamp text-status-critical font-bold">-0.36x BREACH IN SEVERE</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 text-center pt-1 font-meta-stamp text-meta-stamp">
+<div class="bg-surface-container-highest/40 p-1.5 rounded flex flex-col items-center">
+<span class="text-text-muted">BASE CASE</span>
+<span class="font-data-mono-bold text-status-success">4.18x (PASS)</span>
+</div>
+<div class="bg-surface-container-highest/40 p-1.5 rounded flex flex-col items-center">
+<span class="text-text-muted">DOWNSIDE CASE (-10% REV)</span>
+<span class="font-data-mono-bold text-status-critical">4.34x (BREACH)</span>
+</div>
+<div class="bg-surface-container-highest/40 p-1.5 rounded flex flex-col items-center">
+<span class="text-text-muted">SEVERE CASE (-15% REV)</span>
+<span class="font-data-mono-bold text-status-critical">4.61x (BREACH)</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-meta-stamp text-meta-stamp text-primary hover:underline cursor-pointer flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">location_searching</span>
+                ⌁ Source linked: p.114 · §7.02(b) · 99.8% match
+              </span>
+<div class="flex items-center gap-1">
+<button class="px-2 py-1 bg-surface-elevated text-on-surface-variant hover:text-text-primary rounded font-meta-stamp text-meta-stamp transition-colors">Override Value</button>
+<button class="px-2 py-1 bg-surface-elevated text-on-surface-variant hover:text-text-primary rounded font-meta-stamp text-meta-stamp transition-colors">Add Underwriter Note</button>
+<button class="px-2 py-1 bg-primary-container text-on-primary-container rounded font-meta-stamp text-meta-stamp font-bold shadow-sm">Simulate Cure</button>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-status-warning"></span>
+<span class="font-headline-sm text-headline-sm text-text-primary font-bold">Minimum Interest Coverage Ratio</span>
+<span class="font-meta-stamp text-meta-stamp text-text-muted bg-surface-panel px-1.5 py-0.5 rounded">Quarterly ≥ 3.00x</span>
+</div>
+<span class="font-badge-label text-badge-label text-status-warning bg-status-warning/15 px-2 py-0.5 rounded font-bold">
+                WATCHLIST · BUFFER 30.0%
+              </span>
+</div>
+<div class="grid grid-cols-3 gap-space-sm bg-surface-panel p-space-sm rounded">
+<div class="flex flex-col">
+<span class="font-meta-stamp text-meta-stamp text-text-muted">FLOOR REQUIREMENT</span>
+<span class="font-display-kpi text-[20px] text-text-primary leading-tight">3.00x</span>
+<span class="font-meta-stamp text-meta-stamp text-text-faint">Legal Floor §7.02(c)</span>
+</div>
+<div class="flex flex-col">
+<span class="font-meta-stamp text-meta-stamp text-text-muted">ACTUAL LTM (AUDITED)</span>
+<span class="font-display-kpi text-[20px] text-status-success leading-tight">3.90x</span>
+<span class="font-meta-stamp text-meta-stamp text-status-success font-bold">+0.90x Safety Cushion</span>
+</div>
+<div class="flex flex-col">
+<span class="font-meta-stamp text-meta-stamp text-text-muted">STRESS SIMULATION</span>
+<span class="font-display-kpi text-[20px] text-status-critical leading-tight">2.74x</span>
+<span class="font-meta-stamp text-meta-stamp text-status-critical font-bold">-0.26x BREACH IN SEVERE</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 text-center pt-1 font-meta-stamp text-meta-stamp">
+<div class="bg-surface-container-highest/40 p-1.5 rounded flex flex-col items-center">
+<span class="text-text-muted">BASE CASE</span>
+<span class="font-data-mono-bold text-status-success">3.90x (PASS)</span>
+</div>
+<div class="bg-surface-container-highest/40 p-1.5 rounded flex flex-col items-center">
+<span class="text-text-muted">DOWNSIDE (+150 BPS)</span>
+<span class="font-data-mono-bold text-status-warning">3.22x (TIGHT)</span>
+</div>
+<div class="bg-surface-container-highest/40 p-1.5 rounded flex flex-col items-center">
+<span class="text-text-muted">SEVERE (+250 BPS &amp; -10% REV)</span>
+<span class="font-data-mono-bold text-status-critical">2.74x (BREACH)</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-meta-stamp text-meta-stamp text-primary hover:underline cursor-pointer flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">location_searching</span>
+                ⌁ Source linked: p.114 · §7.02(c) · 100% match
+              </span>
+<div class="flex items-center gap-1">
+<button class="px-2 py-1 bg-surface-elevated text-on-surface-variant hover:text-text-primary rounded font-meta-stamp text-meta-stamp">Audit Calculation</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-panel rounded-xl p-space-md shadow-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">table_rows</span>
+<h4 class="font-headline-sm text-headline-sm text-text-primary font-bold">Financial Reconciliation: Reported vs. Audited</h4>
+</div>
+<span class="font-meta-stamp text-meta-stamp text-text-muted">Q2 LTM RECON · SOX AUDITED</span>
+</div>
+<div class="overflow-x-auto bg-surface-container-lowest rounded-lg">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-elevated font-table-header text-table-header text-text-muted border-b border-white/5">
+<th class="py-2 px-3">FINANCIAL METRIC</th>
+<th class="py-2 px-3">REPORTED (CIM)</th>
+<th class="py-2 px-3">CAGNEX AUDITED</th>
+<th class="py-2 px-3">VARIANCE DELTA</th>
+<th class="py-2 px-3">VERIFICATION STATUS</th>
+</tr>
+</thead>
+<tbody class="font-data-mono text-data-mono divide-y divide-white/5">
+<tr class="hover:bg-surface-elevated/50 transition-colors">
+<td class="py-2 px-3 font-semibold text-text-primary">Consolidated Net Revenue</td>
+<td class="py-2 px-3">$412.0M</td>
+<td class="py-2 px-3">$410.8M</td>
+<td class="py-2 px-3 text-text-muted font-bold">-$1.2M (-0.3%)</td>
+<td class="py-2 px-3"><span class="text-status-success font-badge-label text-[10px]">VERIFIED</span></td>
+</tr>
+<tr class="hover:bg-surface-elevated/50 transition-colors bg-status-critical/5">
+<td class="py-2 px-3 font-semibold text-text-primary">Adjusted EBITDA (LTM)</td>
+<td class="py-2 px-3 text-text-primary">$84.2M</td>
+<td class="py-2 px-3 text-status-warning font-bold">$79.6M</td>
+<td class="py-2 px-3 text-status-critical font-bold">-$4.6M (-5.5%)</td>
+<td class="py-2 px-3"><span class="text-status-critical font-badge-label text-[10px]">DISPUTED ADD-BACK</span></td>
+</tr>
+<tr class="hover:bg-surface-elevated/50 transition-colors">
+<td class="py-2 px-3 font-semibold text-text-primary">Total Funded Net Debt</td>
+<td class="py-2 px-3">$328.4M</td>
+<td class="py-2 px-3">$331.1M</td>
+<td class="py-2 px-3 text-status-warning font-bold">+$2.7M (+0.8%)</td>
+<td class="py-2 px-3"><span class="text-status-warning font-badge-label text-[10px]">DEFERRED FEES INC.</span></td>
+</tr>
+<tr class="hover:bg-surface-elevated/50 transition-colors">
+<td class="py-2 px-3 font-semibold text-text-primary">Consolidated Liquidity</td>
+<td class="py-2 px-3">$44.0M</td>
+<td class="py-2 px-3">$44.0M</td>
+<td class="py-2 px-3 text-status-success font-bold">$0.0M (0.0%)</td>
+<td class="py-2 px-3"><span class="text-status-success font-badge-label text-[10px]">PARITY CONFIRMED</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="bg-status-warning/10 p-space-sm rounded-lg flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-status-warning text-[18px] mt-0.5">report_problem</span>
+<div class="flex flex-col">
+<span class="font-body-compact text-body-compact text-text-primary font-semibold">
+              Disputed Add-Back: Sponsor Management Fee ($2.4M) &amp; Supply Chain Restructuring ($2.2M)
+            </span>
+<p class="font-body-compact text-[11px] text-on-surface-variant leading-tight mt-0.5">
+              Flagged as non-compliant under §1.01 Defined Terms ("Consolidated EBITDA"). Agreement caps pro-forma restructuring adjustments at 15.00% of EBITDA ($11.9M total cap reached). Recommendation: Deduct $4.6M before committee vote.
+            </p>
+</div>
+</div>
+</div>
+<div class="bg-surface-panel rounded-xl p-space-md shadow-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">gavel</span>
+<h4 class="font-headline-sm text-headline-sm text-text-primary font-bold">Dynamic IC Memorandum Excerpt (Real-Time Synthesis)</h4>
+</div>
+<span class="font-badge-label text-badge-label text-primary bg-primary-container/20 px-2 py-0.5 rounded">
+            MD SIGN-OFF READY
+          </span>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-lg flex flex-col gap-space-sm">
+<div class="flex flex-col gap-1">
+<span class="font-meta-stamp text-meta-stamp text-text-muted uppercase">Underwriting Conclusion &amp; Key Risks</span>
+<p class="font-body-base text-body-base text-on-surface leading-relaxed">
+              While borrower exhibits strong gross margins (41.2%), the <strong class="text-text-primary">4.18x LTM Leverage</strong> provides inadequate cushion against the <strong class="text-text-primary">4.25x ceiling</strong>. Under a modest 10% revenue compression scenario, leverage reaches <strong class="text-status-critical">4.34x</strong>, triggering immediate default absent sponsor equity cures.
+            </p>
+</div>
+<div class="grid grid-cols-2 gap-space-sm pt-1">
+<div class="bg-surface-panel p-2 rounded flex flex-col gap-0.5">
+<span class="font-meta-stamp text-meta-stamp text-status-success font-bold">STRUCTURAL PROTECTIONS</span>
+<span class="font-body-compact text-body-compact text-on-surface-variant">100% 1st lien asset pledge · Excess cash flow sweep 50% stepping down to 25% at 3.50x net leverage.</span>
+</div>
+<div class="bg-surface-panel p-2 rounded flex flex-col gap-0.5">
+<span class="font-meta-stamp text-meta-stamp text-status-critical font-bold">COMMITTEE CONDITIONS</span>
+<span class="font-body-compact text-body-compact text-on-surface-variant">Mandate 25 bps spread step-up if leverage remains &gt;4.00x post Q4 · Require audited cash balance escrow.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><script src="app.js"></script></main></div></body></html>
