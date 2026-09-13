@@ -16,9 +16,9 @@ module.exports = async function handler(req, res) {
   if (accountType !== "client" && process.env.ALLOW_ROLE_REGISTRATION !== "true") {
     return res.status(403).json({ error: "Employee and admin accounts must be provisioned by an administrator" });
   }
-  const sql = getDatabase();
-  const passwordHash = await bcrypt.hash(password, 12);
   try {
+    const sql = getDatabase();
+    const passwordHash = await bcrypt.hash(password, 12);
     const [user] = await sql`
       insert into users (name, email, phone_number, password_hash)
       values (${name.trim()}, ${normalizedEmail}, ${phoneNumber.trim()}, ${passwordHash})
@@ -40,6 +40,9 @@ module.exports = async function handler(req, res) {
     if (error.code === "23505") return res.status(409).json({ error: "An account with that email already exists" });
     if (error.code === "42703" || error.code === "42P01") {
       return res.status(503).json({ error: "CAGNEX database schema is not up to date. Run the latest schema migration, then try again." });
+    }
+    if (error.message === "DATABASE_URL is not configured" || error.message === "SESSION_SECRET must contain at least 32 characters") {
+      return res.status(503).json({ error: "CAGNEX backend is not configured. Add DATABASE_URL and a 32+ character SESSION_SECRET in Vercel." });
     }
     throw error;
   }

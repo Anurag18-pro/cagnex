@@ -9,21 +9,27 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: "Email and password are required" });
   }
 
-  const sql = getDatabase();
-  const [user] = await sql`select id, name, email, phone_number, password_hash from users where email = ${email.trim().toLowerCase()}`;
-  if (!user || !(await bcrypt.compare(password, user.password_hash))) {
-    return res.status(401).json({ error: "Invalid email or password" });
-  }
+  try {
+    const sql = getDatabase();
+    const [user] = await sql`select id, name, email, phone_number, password_hash from users where email = ${email.trim().toLowerCase()}`;
+    if (!user || !(await bcrypt.compare(password, user.password_hash))) {
+      return res.status(401).json({ error: "Invalid email or password" });
+    }
 
-  const [organization] = await sql`
-    select o.id, o.name, o.slug, om.role
-    from organizations o join organization_members om on om.organization_id = o.id
-    where om.user_id = ${user.id} order by o.created_at asc limit 1
-  `;
-  const roleGroups = { admin: ["super_admin", "managing_director"], employee: ["lead_underwriter", "credit_analyst"], client: ["external_auditor"] };
-  if (!organization || !roleGroups[accountType]?.includes(organization.role)) {
-    return res.status(403).json({ error: "This account is not enabled for the selected workspace" });
+    const [organization] = await sql`
+      select o.id, o.name, o.slug, om.role
+      from organizations o join organization_members om on om.organization_id = o.id
+      where om.user_id = ${user.id} order by o.created_at asc limit 1
+    `;
+    const roleGroups = { admin: ["super_admin", "managing_director"], employee: ["lead_underwriter", "credit_analyst"], client: ["external_auditor"] };
+    if (!organization || !roleGroups[accountType]?.includes(organization.role)) {
+      return res.status(403).json({ error: "This account is not enabled for the selected workspace" });
+    }
+    setSessionCookie(res, await createSession(user.id));
+    return res.status(200).json({ user: { id: user.id, name: user.name, email: user.email, phone_number: user.phone_number }, organization });
+  } catch (error) {
+    if (error.code === "42703" || error.code === "42P01") return res.status(503).json({ error: "CAGNEX database schema is not up to date. Run the latest schema migration, then try again." });
+    if (error.message === "DATABASE_URL is not configured" || error.message === "SESSION_SECRET must contain at least 32 characters") return res.status(503).json({ error: "CAGNEX backend is not configured. Add DATABASE_URL and a 32+ character SESSION_SECRET in Vercel." });
+    throw error;
   }
-  setSessionCookie(res, await createSession(user.id));
-  return res.status(200).json({ user: { id: user.id, name: user.name, email: user.email, phone_number: user.phone_number }, organization });
 };
