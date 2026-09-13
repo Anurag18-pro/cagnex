@@ -13,6 +13,9 @@ module.exports = async function handler(req, res) {
   const normalizedEmail = email.trim().toLowerCase();
   const role = { admin: "managing_director", employee: "credit_analyst", client: "external_auditor" }[accountType];
   if (!role) return res.status(400).json({ error: "Choose a valid account type" });
+  if (accountType !== "client" && process.env.ALLOW_ROLE_REGISTRATION !== "true") {
+    return res.status(403).json({ error: "Employee and admin accounts must be provisioned by an administrator" });
+  }
   const sql = getDatabase();
   const passwordHash = await bcrypt.hash(password, 12);
   try {

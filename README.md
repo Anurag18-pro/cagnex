@@ -26,6 +26,8 @@ Authentication uses bcrypt password hashes and a seven-day, HTTP-only, secure se
 - Employee workspaces only see deals assigned to the employee.
 - Client workspaces only see deals assigned to or created by that client, plus progress/payment placeholders.
 
+Role registration is intentionally restricted: only client accounts can self-register by default. Set `ALLOW_ROLE_REGISTRATION=true` only for local role-flow testing; hosted employee and admin accounts should be provisioned by an administrator.
+
 The underwriting evidence, covenant, reconciliation, and memo services remain available as backend foundations and can be added into the workspace incrementally without bringing back the previous dense navigation.
 
 The browser workbench is intentionally a high-fidelity product shell with deterministic demo data. Production ingestion should connect the document upload API to encrypted object storage, malware scanning, OCR/layout analysis, extraction workers, and a Python calculation sandbox. The backend schema and `/api/v1` deal/job routes establish those boundaries; no UI-only number should be treated as a real underwriting conclusion.
