@@ -16,7 +16,12 @@
   };
 
   const request = async (url, options = {}) => {
-    const response = await fetch(url, { credentials: "same-origin", headers: { "Content-Type": "application/json", ...(options.headers || {}) }, ...options });
+    let response;
+    try {
+      response = await fetch(url, { credentials: "same-origin", headers: { "Content-Type": "application/json", ...(options.headers || {}) }, ...options });
+    } catch {
+      throw new Error("The CAGNEX API is not running. Start the project with `vercel dev`; a static file server cannot process login or registration.");
+    }
     if (response.status === 204) return null;
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error || "Something went wrong. Please try again.");

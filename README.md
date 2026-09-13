@@ -8,7 +8,7 @@ Open `index.html` in a browser for the public preview. For authenticated local t
 
 ## Deploy the backend to Vercel
 
-1. Create a Neon Postgres database and run [`schema.sql`](./schema.sql) in the Neon SQL editor.
+1. Create a Neon Postgres database and run [`schema.sql`](./schema.sql) in the Neon SQL editor. If the database already existed before phone-based registration was added, also run [`migrations/001_add_phone_number.sql`](./migrations/001_add_phone_number.sql).
 2. Create a GitHub repository containing this folder, then import it into Vercel.
 3. Add `DATABASE_URL` and a random `SESSION_SECRET` (at least 32 characters) in Vercel project settings.
 4. Deploy. The API is available under `/api/auth/*` and `/api/v1/*`.

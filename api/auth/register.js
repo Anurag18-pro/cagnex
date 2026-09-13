@@ -38,6 +38,9 @@ module.exports = async function handler(req, res) {
     return res.status(201).json({ user, organization: { ...organization, role } });
   } catch (error) {
     if (error.code === "23505") return res.status(409).json({ error: "An account with that email already exists" });
+    if (error.code === "42703" || error.code === "42P01") {
+      return res.status(503).json({ error: "CAGNEX database schema is not up to date. Run the latest schema migration, then try again." });
+    }
     throw error;
   }
 };
