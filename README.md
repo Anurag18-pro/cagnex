@@ -4,7 +4,14 @@ CAGNEX is a calm, secure operating space for credit teams. The public experience
 
 ## Run it locally
 
-Open `index.html` in a browser for the public preview. For authenticated local testing, run the API with `vercel dev` after adding local `DATABASE_URL` and `SESSION_SECRET` values; this change has intentionally not been deployed.
+Open `index.html` in a browser for the public preview. For authenticated local testing, log in with the Vercel CLI and pull the project variables into the ignored local file, then run the API:
+
+```bash
+vercel env pull .env.local --environment=development
+vercel dev
+```
+
+The local file must contain `DATABASE_URL`, `SESSION_SECRET` (at least 32 characters), `SUPABASE_URL`, and `SUPABASE_ANON_KEY`. Never commit `.env.local`.
 
 ## Deploy the backend to Vercel
 
