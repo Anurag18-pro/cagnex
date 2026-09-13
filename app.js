@@ -151,7 +151,9 @@
       $("#otp-fields").classList.remove("hidden");
       toast("If the account exists, a Supabase email OTP has been sent.");
     } catch (requestError) {
-      error.textContent = requestError.message;
+      error.textContent = requestError.message.toLowerCase().includes("rate limit")
+        ? "Supabase has temporarily rate-limited email delivery. Wait about one minute, then request one new code."
+        : requestError.message;
     } finally {
       button.disabled = false;
       button.textContent = "Send OTP";
@@ -168,6 +170,7 @@
       const client = await getSupabaseClient();
       const email = $("#reset-email").value.trim().toLowerCase();
       const otp = $("#reset-otp").value.trim();
+      if (!/^\d{6}$/.test(otp)) throw new Error("Enter the six-digit code from the CAGNEX email.");
       const { data: authData, error: otpError } = await client.auth.verifyOtp({ email, token: otp, type: "email" });
       if (otpError || !authData.session?.access_token) {
         throw otpError || new Error("The OTP is invalid or expired. Request a new code.");

@@ -5,6 +5,9 @@ const { createSession, setSessionCookie } = require("../_lib/auth");
 
 module.exports = async function handler(req, res) {
   if (req.method === "GET") {
+    if (!process.env.DATABASE_URL || !process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32) {
+      return res.status(503).json({ error: "CAGNEX backend is not configured. Add DATABASE_URL and a 32+ character SESSION_SECRET in Vercel." });
+    }
     if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
       return res.status(503).json({ error: "Supabase email OTP is not configured. Add SUPABASE_URL and SUPABASE_ANON_KEY in Vercel." });
     }

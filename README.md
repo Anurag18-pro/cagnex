@@ -30,6 +30,8 @@ Authentication uses bcrypt password hashes and a seven-day, HTTP-only, secure se
 Role registration is intentionally restricted: only client accounts can self-register by default. Set `ALLOW_ROLE_REGISTRATION=true` only for local role-flow testing; hosted employee and admin accounts should be provisioned by an administrator.
 Password reset uses Supabase Auth email OTP. Add the public `SUPABASE_ANON_KEY` alongside `SUPABASE_URL` in Vercel for Production and Preview, enable email OTP in Supabase Auth, and set the email template to include `{{ .Token }}`. The browser verifies the OTP with Supabase Auth; the server only trusts the resulting access token when replacing the CAGNEX password.
 
+Supabase's default email template sends a magic link, not a visible six-digit code. To receive a six-digit code, configure a custom SMTP provider in Supabase Authentication settings and change the **Magic link or OTP** template body to include `{{ .Token }}`. Supabase also rate-limits repeated requests; wait for the limit window to clear before requesting another code.
+
 ## Supabase document storage
 
 Create a private Supabase Storage bucket named `cagnex-documents`. Add `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, and `SUPABASE_STORAGE_BUCKET` to Vercel. The service-role key is server-only and must never be added to browser code. Authenticated document creation returns a short-lived signed upload URL; the browser uploads directly to Supabase, while PostgreSQL stores only the document metadata and storage key.
