@@ -59,7 +59,7 @@
   $("#auth-form").addEventListener("submit", async (event) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    const payload = { email: form.get("email"), password: form.get("password") };
+    const payload = { email: form.get("email"), password: form.get("password"), account_type: form.get("account_type") };
     if (authMode === "register") Object.assign(payload, { name: form.get("name"), phone_number: form.get("phone") });
     const error = $("#form-error");
     error.textContent = "";
@@ -97,10 +97,38 @@
 
   const showApp = async () => {
     setView("app");
+    const role = organization?.role || "external_auditor";
+    const isAdmin = ["super_admin", "managing_director"].includes(role);
+    const isEmployee = ["lead_underwriter", "credit_analyst"].includes(role);
+    $("#role-badge").textContent = isAdmin ? "CEO / Admin" : isEmployee ? "Employee" : "Client";
+    $("#deal-nav-label").textContent = isAdmin ? "All deal rooms" : isEmployee ? "Assigned work" : "My deals";
+    $("#workspace-eyebrow").textContent = isAdmin ? "CEO command center" : isEmployee ? "Employee workspace" : "Client workspace";
+    $("#welcome-copy").textContent = isAdmin ? "Every important signal from your organization, in one place." : isEmployee ? "Only deals assigned to you are shown here." : "Track your deal progress and account information here.";
+    $("#deal-heading").textContent = isAdmin ? "Organization deal rooms" : isEmployee ? "Assigned deal rooms" : "My deal rooms";
+    $("#deal-subheading").textContent = isAdmin ? "Monitor progress across every active piece of work." : isEmployee ? "Your access is limited to the deals you are working on." : "Your account only shows the deals connected to you.";
+    $("#new-deal-button").classList.toggle("hidden", !isAdmin);
+    $("#admin-panel").classList.toggle("hidden", !isAdmin);
+    if (!isAdmin) {
+      $("#stat-one-label").textContent = isEmployee ? "Assigned deal rooms" : "Your active deals";
+      $("#stat-two-label").textContent = isEmployee ? "Review flags" : "Payment status";
+      $("#stat-three-label").textContent = "Progress";
+      $("#readiness-value").textContent = isEmployee ? "78%" : "In progress";
+    }
     const firstName = (currentUser?.name || "there").split(" ")[0];
     $("#welcome-title").textContent = `Good morning, ${firstName}.`;
     $("#user-avatar").textContent = (currentUser?.name || "AM").split(" ").map((part) => part[0]).join("").slice(0, 2).toUpperCase();
     $("#workspace-name").textContent = organization?.name || "Your workspace";
+    try {
+      const overview = await request("/api/v1/overview");
+      if (isAdmin) {
+        $("#people-count").textContent = overview.people;
+        $("#admin-deals").textContent = overview.deals;
+        $("#admin-flags").textContent = overview.flags;
+        $("#team-list").innerHTML = (overview.team || []).map((member) => `<div class="team-member"><span>${escapeHtml(member.name)}</span><small>${escapeHtml(member.role.replaceAll("_", " "))} · ${member.assigned_deals} assigned</small></div>`).join("");
+      }
+    } catch (error) {
+      toast(error.message);
+    }
     await loadDeals();
   };
 

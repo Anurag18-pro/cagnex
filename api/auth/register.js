@@ -5,12 +5,14 @@ const { createSession, setSessionCookie } = require("../_lib/auth");
 
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
-  const { name, email, phone_number: phoneNumber, password, organization_name: organizationName = `${name || "New"} Workspace` } = req.body || {};
+  const { name, email, phone_number: phoneNumber, password, account_type: accountType = "client", organization_name: organizationName = `${name || "New"} Workspace` } = req.body || {};
   if (!name || !email || !phoneNumber || typeof password !== "string" || password.length < 8) {
     return res.status(400).json({ error: "Name, phone number, email, and a password of at least 8 characters are required" });
   }
 
   const normalizedEmail = email.trim().toLowerCase();
+  const role = { admin: "managing_director", employee: "credit_analyst", client: "external_auditor" }[accountType];
+  if (!role) return res.status(400).json({ error: "Choose a valid account type" });
   const sql = getDatabase();
   const passwordHash = await bcrypt.hash(password, 12);
   try {
@@ -27,10 +29,10 @@ module.exports = async function handler(req, res) {
     `;
     await sql`
       insert into organization_members (organization_id, user_id, role)
-      values (${organization.id}, ${user.id}, 'managing_director')
+      values (${organization.id}, ${user.id}, ${role})
     `;
     setSessionCookie(res, await createSession(user.id));
-    return res.status(201).json({ user, organization });
+    return res.status(201).json({ user, organization: { ...organization, role } });
   } catch (error) {
     if (error.code === "23505") return res.status(409).json({ error: "An account with that email already exists" });
     throw error;

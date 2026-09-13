@@ -2,16 +2,16 @@
 
 CAGNEX is a calm, secure operating space for credit teams. The public experience gives new users a clear product overview, while authenticated users get a focused workspace for deal rooms and review. The backend supports organization-scoped accounts, secure sessions, and deal APIs.
 
-## Run it
+## Run it locally
 
-Open `index.html` in a browser for the static preview. The API is deployed as Vercel serverless functions.
+Open `index.html` in a browser for the public preview. For authenticated local testing, run the API with `vercel dev` after adding local `DATABASE_URL` and `SESSION_SECRET` values; this change has intentionally not been deployed.
 
 ## Deploy the backend to Vercel
 
 1. Create a Neon Postgres database and run [`schema.sql`](./schema.sql) in the Neon SQL editor.
 2. Create a GitHub repository containing this folder, then import it into Vercel.
 3. Add `DATABASE_URL` and a random `SESSION_SECRET` (at least 32 characters) in Vercel project settings.
-4. Deploy. The API is available under `/api/auth/*`, `/api/workflows`, and the PRD-aligned `/api/v1/*` deal and job routes.
+4. Deploy. The API is available under `/api/auth/*` and `/api/v1/*`.
 
 Authentication uses bcrypt password hashes and a seven-day, HTTP-only, secure session cookie. Workflow queries are scoped to the authenticated user.
 
@@ -22,6 +22,9 @@ Authentication uses bcrypt password hashes and a seven-day, HTTP-only, secure se
 - Sign in through a secure HTTP-only session cookie.
 - See an authenticated workspace with organization-scoped deal rooms.
 - Create, refresh, and open deal rooms through the backend API.
+- CEO/admin workspaces see organization-wide deal, team, and flag metrics.
+- Employee workspaces only see deals assigned to the employee.
+- Client workspaces only see deals assigned to or created by that client, plus progress/payment placeholders.
 
 The underwriting evidence, covenant, reconciliation, and memo services remain available as backend foundations and can be added into the workspace incrementally without bringing back the previous dense navigation.
 
