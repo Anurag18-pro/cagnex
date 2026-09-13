@@ -6,6 +6,8 @@
   let authMode = "login";
   let currentUser = null;
   let organization = null;
+  let demoMode = false;
+  const demoStorageKey = "cagnex-demo-users";
 
   const toast = (message) => {
     const node = $("#toast");
@@ -24,8 +26,34 @@
     }
     if (response.status === 204) return null;
     const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.error || "Something went wrong. Please try again.");
+    if (!response.ok) {
+      const error = new Error(data.error || "Something went wrong. Please try again.");
+      error.apiUnavailable = [404, 405, 501].includes(response.status);
+      throw error;
+    }
     return data;
+  };
+
+  const demoUsers = () => JSON.parse(localStorage.getItem(demoStorageKey) || "[]");
+  const saveDemoUsers = (users) => localStorage.setItem(demoStorageKey, JSON.stringify(users));
+  const demoRole = (accountType) => ({ admin: "managing_director", employee: "credit_analyst", client: "external_auditor" }[accountType] || "external_auditor");
+  const demoAuth = (form, register) => {
+    const accountType = form.get("account_type") || "client";
+    const email = String(form.get("email")).trim().toLowerCase();
+    const users = demoUsers();
+    let user = users.find((item) => item.email === email);
+    if (register) {
+      user = { id: `demo-${Date.now()}`, name: String(form.get("name")).trim(), email, phone_number: String(form.get("phone")).trim(), password: String(form.get("password")), accountType, deals: [] };
+      users.push(user);
+      saveDemoUsers(users);
+    } else if (!user) {
+      user = { id: `demo-${accountType}`, name: accountType === "admin" ? "Anurag Mishra" : accountType === "employee" ? "Demo Employee" : "Demo Client", email, phone_number: "", password: String(form.get("password")), accountType, deals: [] };
+      users.push(user);
+      saveDemoUsers(users);
+    }
+    currentUser = user;
+    organization = { id: `demo-workspace-${user.accountType}`, name: user.accountType === "admin" ? "CAGNEX Executive Workspace" : `${user.name}'s Workspace`, role: demoRole(user.accountType) };
+    demoMode = true;
   };
 
   const setView = (view) => {
@@ -77,7 +105,13 @@
       organization = result.organization || null;
       await showApp();
     } catch (requestError) {
-      error.textContent = requestError.message;
+      if (requestError.apiUnavailable || requestError.message.includes("API is not running")) {
+        demoAuth(form, authMode === "register");
+        toast("Local preview mode: this workspace is saved only in this browser.");
+        await showApp();
+      } else {
+        error.textContent = requestError.message;
+      }
     } finally {
       submit.disabled = false;
       submit.innerHTML = authMode === "register" ? "Create workspace <span>→</span>" : "Sign in <span>→</span>";
@@ -92,6 +126,11 @@
   };
 
   const loadDeals = async () => {
+    if (demoMode) {
+      const stored = demoUsers().find((item) => item.id === currentUser.id);
+      renderDeals(stored?.deals || []);
+      return;
+    }
     try {
       const result = await request("/api/v1/deals");
       renderDeals(result.deals || []);
@@ -123,6 +162,7 @@
     $("#welcome-title").textContent = `Good morning, ${firstName}.`;
     $("#user-avatar").textContent = (currentUser?.name || "AM").split(" ").map((part) => part[0]).join("").slice(0, 2).toUpperCase();
     $("#workspace-name").textContent = organization?.name || "Your workspace";
+    $("#workspace-eyebrow").textContent += demoMode ? " · LOCAL PREVIEW" : "";
     try {
       const overview = await request("/api/v1/overview");
       if (isAdmin) {
@@ -132,16 +172,25 @@
         $("#team-list").innerHTML = (overview.team || []).map((member) => `<div class="team-member"><span>${escapeHtml(member.name)}</span><small>${escapeHtml(member.role.replaceAll("_", " "))} · ${member.assigned_deals} assigned</small></div>`).join("");
       }
     } catch (error) {
-      toast(error.message);
+      if (demoMode && isAdmin) {
+        const users = demoUsers();
+        $("#people-count").textContent = users.length || "1";
+        $("#admin-deals").textContent = users.reduce((count, user) => count + (user.deals?.length || 0), 0);
+        $("#admin-flags").textContent = "0";
+        $("#team-list").innerHTML = users.map((user) => `<div class="team-member"><span>${escapeHtml(user.name)}</span><small>${escapeHtml(demoRole(user.accountType).replaceAll("_", " "))} · ${user.deals?.length || 0} assigned</small></div>`).join("");
+      } else if (!demoMode) {
+        toast(error.message);
+      }
     }
     await loadDeals();
   };
 
   $("#logout-button").addEventListener("click", async () => {
-    await request("/api/auth/logout", { method: "POST" });
+    if (!demoMode) await request("/api/auth/logout", { method: "POST" });
     currentUser = null;
     organization = null;
     setView("public");
+    demoMode = false;
     toast("You have been signed out.");
   });
   $("#new-deal-button").addEventListener("click", () => $("#deal-modal").classList.remove("hidden"));
@@ -156,6 +205,17 @@
     }
     const form = new FormData(event.currentTarget);
     try {
+      if (demoMode) {
+        const users = demoUsers();
+        const user = users.find((item) => item.id === currentUser.id);
+        user.deals.push({ id: `demo-deal-${Date.now()}`, name: form.get("deal-name"), borrower_name: form.get("borrower-name"), facility_type: "Credit facility", status: "review", flags_count: 0 });
+        saveDemoUsers(users);
+        event.currentTarget.reset();
+        $("#deal-modal").classList.add("hidden");
+        toast("Demo deal room created in this browser.");
+        await loadDeals();
+        return;
+      }
       await request("/api/v1/deals", { method: "POST", body: JSON.stringify({ name: form.get("deal-name"), borrower_name: form.get("borrower-name"), workspace_id: organization.id }) });
       event.currentTarget.reset();
       $("#deal-modal").classList.add("hidden");
