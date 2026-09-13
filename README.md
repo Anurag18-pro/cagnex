@@ -1,6 +1,6 @@
 # CAGNEX
 
-CAGNEX is a calm, secure operating space for credit teams. The public experience gives new users a clear product overview, while authenticated users get a focused workspace for deal rooms and review. The backend supports organization-scoped accounts, secure sessions, and deal APIs.
+CAGNEX is a calm, secure operating space for credit teams. The public experience gives new users a clear product overview, while authenticated users get a focused workspace for deal rooms and review. Vercel hosts the application/API, Supabase provides PostgreSQL and private document storage, and the backend enforces organization-scoped accounts and secure sessions.
 
 ## Run it locally
 
@@ -8,7 +8,7 @@ Open `index.html` in a browser for the public preview. For authenticated local t
 
 ## Deploy the backend to Vercel
 
-1. Create a Neon Postgres database and run [`schema.sql`](./schema.sql) in the Neon SQL editor. If the database already existed before phone-based registration was added, also run [`migrations/001_add_phone_number.sql`](./migrations/001_add_phone_number.sql).
+1. Create a Supabase project and run [`schema.sql`](./schema.sql) in the Supabase SQL editor. If the database already existed before phone-based registration was added, also run [`migrations/001_add_phone_number.sql`](./migrations/001_add_phone_number.sql).
 2. Create a GitHub repository containing this folder, then import it into Vercel.
 3. Add `DATABASE_URL` and a random `SESSION_SECRET` (at least 32 characters) in Vercel project settings.
 4. Deploy. The API is available under `/api/auth/*` and `/api/v1/*`.
@@ -27,6 +27,10 @@ Authentication uses bcrypt password hashes and a seven-day, HTTP-only, secure se
 - Client workspaces only see deals assigned to or created by that client, plus progress/payment placeholders.
 
 Role registration is intentionally restricted: only client accounts can self-register by default. Set `ALLOW_ROLE_REGISTRATION=true` only for local role-flow testing; hosted employee and admin accounts should be provisioned by an administrator.
+
+## Supabase document storage
+
+Create a private Supabase Storage bucket named `cagnex-documents`. Add `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, and `SUPABASE_STORAGE_BUCKET` to Vercel. The service-role key is server-only and must never be added to browser code. Authenticated document creation returns a short-lived signed upload URL; the browser uploads directly to Supabase, while PostgreSQL stores only the document metadata and storage key.
 
 The underwriting evidence, covenant, reconciliation, and memo services remain available as backend foundations and can be added into the workspace incrementally without bringing back the previous dense navigation.
 
