@@ -7,6 +7,7 @@
   let currentUser = null;
   let organization = null;
   let demoMode = false;
+  let supabaseClient = null;
   const demoStorageKey = "cagnex-demo-users";
 
   const toast = (message) => {
@@ -32,6 +33,14 @@
       throw error;
     }
     return data;
+  };
+
+  const getSupabaseClient = async () => {
+    if (supabaseClient) return supabaseClient;
+    if (!window.supabase?.createClient) throw new Error("Supabase Auth is unavailable. Check your internet connection and reload.");
+    const config = await request("/api/auth/config");
+    supabaseClient = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey);
+    return supabaseClient;
   };
 
   const demoUsers = () => JSON.parse(localStorage.getItem(demoStorageKey) || "[]");
@@ -136,9 +145,11 @@
     button.disabled = true;
     button.textContent = "Sending OTP…";
     try {
-      await request("/api/auth/request-reset", { method: "POST", body: JSON.stringify({ email }) });
+      const client = await getSupabaseClient();
+      const { error: otpError } = await client.auth.signInWithOtp({ email });
+      if (otpError) throw otpError;
       $("#otp-fields").classList.remove("hidden");
-      toast("If the account exists, an OTP has been sent by email.");
+      toast("If the account exists, a Supabase email OTP has been sent.");
     } catch (requestError) {
       error.textContent = requestError.message;
     } finally {
@@ -154,17 +165,26 @@
     button.disabled = true;
     button.textContent = "Updating password…";
     try {
+      const client = await getSupabaseClient();
+      const email = $("#reset-email").value.trim().toLowerCase();
+      const otp = $("#reset-otp").value.trim();
+      const { data: authData, error: otpError } = await client.auth.verifyOtp({ email, token: otp, type: "email" });
+      if (otpError || !authData.session?.access_token) {
+        throw otpError || new Error("The OTP is invalid or expired. Request a new code.");
+      }
       const result = await request("/api/auth/reset-password", {
         method: "POST",
         body: JSON.stringify({
-          email: $("#reset-email").value.trim(),
-          otp: $("#reset-otp").value.trim(),
-          password: $("#reset-password").value
+          email,
+          otp,
+          password: $("#reset-password").value,
+          access_token: authData.session.access_token
         })
       });
       toast(result.message);
       $("#password").value = $("#reset-password").value;
       $("#reset-panel").classList.add("hidden");
+      $("#otp-fields").classList.add("hidden");
     } catch (requestError) {
       error.textContent = requestError.message;
     } finally {

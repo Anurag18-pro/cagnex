@@ -28,7 +28,7 @@ Authentication uses bcrypt password hashes and a seven-day, HTTP-only, secure se
 - Client workspaces only see deals assigned to or created by that client, plus progress/payment placeholders.
 
 Role registration is intentionally restricted: only client accounts can self-register by default. Set `ALLOW_ROLE_REGISTRATION=true` only for local role-flow testing; hosted employee and admin accounts should be provisioned by an administrator.
-Password reset requires a verified sending domain plus `RESEND_API_KEY` and `RESEND_FROM_EMAIL` in Vercel. OTPs are hashed at rest, expire after ten minutes, and are never returned by the API.
+Password reset uses Supabase Auth email OTP. Add the public `SUPABASE_ANON_KEY` alongside `SUPABASE_URL` in Vercel, enable email OTP in Supabase Auth, and set the email template to include `{{ .Token }}`. The browser verifies the OTP with Supabase Auth; the server only trusts the resulting access token when replacing the CAGNEX password.
 
 ## Supabase document storage
 
