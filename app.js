@@ -38,7 +38,7 @@
   const getSupabaseClient = async () => {
     if (supabaseClient) return supabaseClient;
     if (!window.supabase?.createClient) throw new Error("Supabase Auth is unavailable. Check your internet connection and reload.");
-    const config = await request("/api/auth/config");
+    const config = await request("/api/auth/request-reset");
     supabaseClient = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey);
     return supabaseClient;
   };
