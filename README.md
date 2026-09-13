@@ -1,6 +1,6 @@
-# CAGNEX MVP
+# CAGNEX
 
-CAGNEX is a credit intelligence and underwriting workbench for private credit, corporate underwriting, and deal teams. This implementation follows the DealAudit AI product requirements: source-linked evidence, deterministic validation jobs, covenant review, financial reconciliation, deal-level access, and audit-ready exports.
+CAGNEX is a calm, secure operating space for credit teams. The public experience gives new users a clear product overview, while authenticated users get a focused workspace for deal rooms and review. The backend supports organization-scoped accounts, secure sessions, and deal APIs.
 
 ## Run it
 
@@ -15,13 +15,15 @@ Open `index.html` in a browser for the static preview. The API is deployed as Ve
 
 Authentication uses bcrypt password hashes and a seven-day, HTTP-only, secure session cookie. Workflow queries are scoped to the authenticated user.
 
-## MVP behavior
+## Current product behavior
 
-- Review a deal pipeline with processing state and risk signals.
-- Open a dual-pane evidence/intelligence workbench.
-- Inspect source-linked covenant thresholds, headroom, stress scenarios, and financial variances.
-- Queue deterministic compliance and IC memo export jobs.
-- Create a new deal room from the UI.
+- Explore the product without an account.
+- Register with full name, work email, phone number, and password.
+- Sign in through a secure HTTP-only session cookie.
+- See an authenticated workspace with organization-scoped deal rooms.
+- Create, refresh, and open deal rooms through the backend API.
+
+The underwriting evidence, covenant, reconciliation, and memo services remain available as backend foundations and can be added into the workspace incrementally without bringing back the previous dense navigation.
 
 The browser workbench is intentionally a high-fidelity product shell with deterministic demo data. Production ingestion should connect the document upload API to encrypted object storage, malware scanning, OCR/layout analysis, extraction workers, and a Python calculation sandbox. The backend schema and `/api/v1` deal/job routes establish those boundaries; no UI-only number should be treated as a real underwriting conclusion.
 

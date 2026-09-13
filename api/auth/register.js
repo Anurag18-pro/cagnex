@@ -5,9 +5,9 @@ const { createSession, setSessionCookie } = require("../_lib/auth");
 
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
-  const { name, email, password, organization_name: organizationName = `${name || "New"} Workspace` } = req.body || {};
-  if (!name || !email || typeof password !== "string" || password.length < 8) {
-    return res.status(400).json({ error: "Name, email, and a password of at least 8 characters are required" });
+  const { name, email, phone_number: phoneNumber, password, organization_name: organizationName = `${name || "New"} Workspace` } = req.body || {};
+  if (!name || !email || !phoneNumber || typeof password !== "string" || password.length < 8) {
+    return res.status(400).json({ error: "Name, phone number, email, and a password of at least 8 characters are required" });
   }
 
   const normalizedEmail = email.trim().toLowerCase();
@@ -15,9 +15,9 @@ module.exports = async function handler(req, res) {
   const passwordHash = await bcrypt.hash(password, 12);
   try {
     const [user] = await sql`
-      insert into users (name, email, password_hash)
-      values (${name.trim()}, ${normalizedEmail}, ${passwordHash})
-      returning id, name, email
+      insert into users (name, email, phone_number, password_hash)
+      values (${name.trim()}, ${normalizedEmail}, ${phoneNumber.trim()}, ${passwordHash})
+      returning id, name, email, phone_number
     `;
     const slug = `${organizationName.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "workspace"}-${randomUUID().slice(0, 8)}`;
     const [organization] = await sql`
