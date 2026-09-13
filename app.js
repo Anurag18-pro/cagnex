@@ -38,7 +38,7 @@
   const getSupabaseClient = async () => {
     if (supabaseClient) return supabaseClient;
     if (!window.supabase?.createClient) throw new Error("Supabase Auth is unavailable. Check your internet connection and reload.");
-    const config = await request("/api/auth/request-reset");
+    const config = await request("/api/auth/login");
     supabaseClient = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey);
     return supabaseClient;
   };
@@ -172,9 +172,10 @@
       if (otpError || !authData.session?.access_token) {
         throw otpError || new Error("The OTP is invalid or expired. Request a new code.");
       }
-      const result = await request("/api/auth/reset-password", {
+      const result = await request("/api/auth/login", {
         method: "POST",
         body: JSON.stringify({
+          action: "reset-password",
           email,
           otp,
           password: $("#reset-password").value,

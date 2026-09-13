@@ -1,15 +1,46 @@
 const bcrypt = require("bcryptjs");
+const { createClient } = require("@supabase/supabase-js");
 const { getDatabase } = require("../_lib/db");
 const { createSession, setSessionCookie } = require("../_lib/auth");
 
 module.exports = async function handler(req, res) {
+  if (req.method === "GET") {
+    if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
+      return res.status(503).json({ error: "Supabase email OTP is not configured. Add SUPABASE_URL and SUPABASE_ANON_KEY in Vercel." });
+    }
+    return res.status(200).json({
+      supabaseUrl: process.env.SUPABASE_URL,
+      supabaseAnonKey: process.env.SUPABASE_ANON_KEY
+    });
+  }
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
-  const { email, password, account_type: accountType = "client" } = req.body || {};
+  const { email, password, account_type: accountType = "client", action, otp, access_token: accessToken } = req.body || {};
   if (typeof email !== "string" || typeof password !== "string") {
     return res.status(400).json({ error: "Email and password are required" });
   }
 
   try {
+    if (action === "reset-password") {
+      if (typeof otp !== "string" || !/^\d{6}$/.test(otp) || typeof accessToken !== "string" || password.length < 8) {
+        return res.status(400).json({ error: "Email, six-digit code, and a password of at least 8 characters are required" });
+      }
+      if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
+        return res.status(503).json({ error: "Supabase email OTP is not configured. Add SUPABASE_URL and SUPABASE_ANON_KEY in Vercel." });
+      }
+      const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+      const { data: authData, error: authError } = await supabase.auth.getUser(accessToken);
+      if (authError || authData.user?.email?.toLowerCase() !== email.trim().toLowerCase()) {
+        return res.status(401).json({ error: "The email OTP is invalid or expired. Request a new code." });
+      }
+      const sql = getDatabase();
+      const [user] = await sql`select id from users where email = ${email.trim().toLowerCase()}`;
+      if (!user) return res.status(400).json({ error: "The code is invalid or expired. Request a new code." });
+      const passwordHash = await bcrypt.hash(password, 12);
+      await sql`update users set password_hash = ${passwordHash} where id = ${user.id}`;
+      setSessionCookie(res, await createSession(user.id));
+      return res.status(200).json({ message: "Password updated", user_id: user.id });
+    }
+
     const sql = getDatabase();
     const [user] = await sql`select id, name, email, phone_number, password_hash from users where email = ${email.trim().toLowerCase()}`;
     if (!user || !(await bcrypt.compare(password, user.password_hash))) {
