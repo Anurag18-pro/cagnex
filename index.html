@@ -3,145 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CAGNEX — Professional services automation</title>
+  <title>CAGNEX — Credit Intelligence Workbench</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="app-shell">
-    <aside class="sidebar">
-      <a class="brand" href="#">
-        <span class="brand-mark">✦</span>
-        <span>CAGNEX</span>
-      </a>
-
-      <nav class="main-nav" aria-label="Main navigation">
-        <a class="nav-item active" href="#overview"><span>⌂</span> Overview</a>
-        <a class="nav-item" href="#workflows"><span>↯</span> Workflows <b>4</b></a>
-        <a class="nav-item" href="#clients"><span>♧</span> Clients</a>
-        <a class="nav-item" href="#activity"><span>◷</span> Activity</a>
+  <div class="shell">
+    <aside class="rail">
+      <div class="logo"><span>◈</span><b>CAGNEX</b><small>Credit intelligence</small></div>
+      <div class="workspace"><span class="workspace-mark">AP</span><div><b>Apex Credit Partners</b><small>Underwriting desk</small></div><span>⌄</span></div>
+      <nav>
+        <small class="nav-label">WORKSPACE</small>
+        <a class="nav-link active" href="#pipeline"><span>▦</span> Deal pipeline <i>6</i></a>
+        <a class="nav-link" href="#workbench"><span>◫</span> Workbench</a>
+        <a class="nav-link" href="#covenants"><span>◇</span> Covenant library</a>
+        <a class="nav-link" href="#audit"><span>◷</span> Audit log</a>
+        <a class="nav-link" href="#exports"><span>⇩</span> Export vault</a>
+        <small class="nav-label second">ADMINISTRATION</small>
+        <a class="nav-link" href="#"><span>♙</span> Team & access</a>
+        <a class="nav-link" href="#"><span>⚙</span> Settings</a>
       </nav>
-
-      <div class="sidebar-bottom">
-        <div class="usage-card">
-          <div class="usage-title"><span>Plan usage</span><strong>68%</strong></div>
-          <div class="progress"><span></span></div>
-          <p>34 of 50 monthly runs used</p>
-          <button class="upgrade-button">Upgrade plan <span>→</span></button>
-        </div>
-        <a class="nav-item muted" href="#"><span>⚙</span> Settings</a>
-        <div class="profile">
-          <div class="avatar">AK</div>
-          <div><strong>Arjun Kapoor</strong><small>Kapoor & Co.</small></div>
-          <span class="more">•••</span>
-        </div>
-      </div>
+      <div class="rail-foot"><div class="security"><span>●</span><div><b>Secure workspace</b><small>ZDR controls active</small></div></div><div class="user"><span>AC</span><div><b>A. Chen</b><small>Managing Director</small></div><strong>•••</strong></div></div>
     </aside>
 
-    <main class="main-content">
+    <main class="main">
       <header class="topbar">
-        <div class="mobile-brand"><span class="brand-mark">✦</span> CAGNEX</div>
-        <div class="breadcrumb">Workspace / <strong>Overview</strong></div>
-        <div class="topbar-actions">
-          <button class="icon-button" aria-label="Notifications">♢<i></i></button>
-          <button class="help-button">? <span>Help center</span></button>
-          <button class="primary-button" id="topCreateButton">+ New workflow</button>
-        </div>
+        <div class="crumbs"><span>Deal Rooms</span><b>/</b><strong id="crumbTitle">Pipeline</strong></div>
+        <div class="top-actions"><span class="live-dot"></span><span class="sync-label">All systems operational</span><button class="ghost">⌕ <span>Search</span></button><button class="icon">◌<i></i></button><button class="new-deal" id="newDeal">+ New deal room</button></div>
       </header>
 
-      <div class="page-content" id="overview">
-        <section class="hero">
-          <div>
-            <p class="eyebrow">MONDAY, SEPTEMBER 14, 2026</p>
-            <h1>Good morning, Arjun <span>✦</span></h1>
-            <p class="hero-copy">Your business is moving while you focus on the work that matters.</p>
-          </div>
-          <div class="hero-sparkline" aria-label="Workflow activity rising over the last 7 days">
-            <span>Weekly runs</span>
-            <strong>+24.8%</strong>
-            <svg viewBox="0 0 160 48" role="img" aria-hidden="true">
-              <path d="M2 41 C19 38, 21 27, 36 32 S56 38, 67 25 S85 29, 96 18 S113 25, 124 11 S145 15, 158 3" />
-            </svg>
-          </div>
-        </section>
+      <section id="pipeline" class="view active-view">
+        <div class="page-head"><div><div class="eyebrow">MONDAY · 14 SEP 2026</div><h1>Deal pipeline</h1><p>Move from source documents to an investment-ready decision.</p></div><div class="head-stats"><div><b>$1.24B</b><span>Capital under review</span></div><div><b>18</b><span>Open flags</span></div></div></div>
+        <div class="filter-row"><div class="segmented"><button class="selected">All deals <b>6</b></button><button>Parsing <b>2</b></button><button>Needs review <b>3</b></button><button>Complete <b>1</b></button></div><button class="filter">☷ Filters</button><button class="view-toggle">▤　▦</button></div>
+        <div class="deal-table">
+          <div class="table-head"><span>DEAL / BORROWER</span><span>FACILITY</span><span>STATUS</span><span>RISK SIGNALS</span><span>OWNER</span><span>UPDATED</span><span></span></div>
+          <button class="deal-row selected-row" data-deal="apollo"><span class="deal-name"><b>Project Apollo</b><small>Northstar Industrial Holdings · TLB</small></span><span class="mono">$250.0M</span><span><em class="status parsing">● Parsing 78%</em></span><span><em class="flag warning">2 warnings</em><em class="flag critical">1 critical</em></span><span class="avatar small-avatar">AC</span><span class="muted">2 min ago</span><span>›</span></button>
+          <button class="deal-row" data-deal="borealis"><span class="deal-name"><b>Project Borealis</b><small>Meridian Software Group · RCF</small></span><span class="mono">$90.0M</span><span><em class="status review">● Needs review</em></span><span><em class="flag warning">3 warnings</em></span><span class="avatar blue">JM</span><span class="muted">18 min ago</span><span>›</span></button>
+          <button class="deal-row" data-deal="comet"><span class="deal-name"><b>Project Comet</b><small>Atlas Consumer Brands · Syndicated</small></span><span class="mono">$500.0M</span><span><em class="status complete">● Complete</em></span><span><em class="flag clean">✓ No open flags</em></span><span class="avatar gold">RK</span><span class="muted">Yesterday</span><span>›</span></button>
+          <button class="deal-row" data-deal="everest"><span class="deal-name"><b>Project Everest</b><small>Summit Logistics · ABL</small></span><span class="mono">$175.0M</span><span><em class="status queued">● Queued</em></span><span><em class="flag muted-flag">Awaiting docs</em></span><span class="avatar purple">LT</span><span class="muted">Yesterday</span><span>›</span></button>
+        </div>
+        <div class="bottom-panels"><div class="panel activity-panel"><div class="panel-title"><div><b>Recent activity</b><small>Immutable events across your workspace</small></div><a href="#audit">View audit log →</a></div><div class="activity-line"><span class="activity-icon green-bg">✓</span><div><b>A. Chen approved leverage covenant override</b><small>Project Apollo · 7.02(b) · 2 minutes ago</small></div><em>Approved</em></div><div class="activity-line"><span class="activity-icon blue-bg">↗</span><div><b>Extraction completed for 42 financial line items</b><small>Project Comet · 18 minutes ago</small></div><em>System</em></div><div class="activity-line"><span class="activity-icon amber-bg">!</span><div><b>New document version detected</b><small>Project Borealis · Credit Agreement · 1 hour ago</small></div><em>Review</em></div></div><div class="panel insight-panel"><span class="eyebrow">UNDERWRITING SIGNAL</span><h2>3 deals need your attention.</h2><p>Two covenant thresholds are approaching breach under the downside scenario.</p><button class="dark-button" id="openWorkbench">Review highest risk →</button></div></div>
+      </section>
 
-        <section class="stats-grid" aria-label="Workspace metrics">
-          <article class="stat-card">
-            <div class="stat-icon purple">↯</div>
-            <div class="stat-label">Automated this month</div>
-            <strong>284 <small>runs</small></strong>
-            <span class="trend positive">↑ 18.4% <em>vs last month</em></span>
-          </article>
-          <article class="stat-card">
-            <div class="stat-icon green">◷</div>
-            <div class="stat-label">Time saved</div>
-            <strong>31.5 <small>hours</small></strong>
-            <span class="trend positive">↑ 12.2% <em>vs last month</em></span>
-          </article>
-          <article class="stat-card">
-            <div class="stat-icon orange">♧</div>
-            <div class="stat-label">Active clients</div>
-            <strong>42 <small>clients</small></strong>
-            <span class="trend neutral">— 0.0% <em>vs last month</em></span>
-          </article>
-          <article class="stat-card">
-            <div class="stat-icon blue">◉</div>
-            <div class="stat-label">Success rate</div>
-            <strong>98.7 <small>%</small></strong>
-            <span class="trend positive">↑ 2.1% <em>vs last month</em></span>
-          </article>
-        </section>
-
-        <section class="section-heading" id="workflows">
-          <div>
-            <h2>Your workflows</h2>
-            <p>Automations that keep your client work moving.</p>
-          </div>
-          <div class="section-actions">
-            <label class="search"><span>⌕</span><input id="workflowSearch" type="search" placeholder="Search workflows"></label>
-            <button class="filter-button">☷ <span>Filter</span></button>
-            <button class="outline-button" id="createButton">+ Create workflow</button>
-          </div>
-        </section>
-
-        <section class="workflow-list" id="workflowList"></section>
-
-        <section class="lower-grid">
-          <article class="panel" id="activity">
-            <div class="panel-heading"><div><h2>Recent activity</h2><p>What your workspace has been up to.</p></div><a href="#">View all →</a></div>
-            <div class="activity-list">
-              <div class="activity-item"><span class="activity-dot purple">↯</span><div><strong>Client onboarding</strong> ran for <b>Northstar Labs</b><small>2 minutes ago · Completed successfully</small></div><span class="success">Done</span></div>
-              <div class="activity-item"><span class="activity-dot orange">✉</span><div><strong>Proposal follow-up</strong> sent to <b>Priya Mehta</b><small>28 minutes ago · Email delivered</small></div><span class="success">Done</span></div>
-              <div class="activity-item"><span class="activity-dot blue">▣</span><div><strong>Invoice reminder</strong> scheduled for <b>Studio Koto</b><small>1 hour ago · Due in 2 days</small></div><span class="pending">Queued</span></div>
-            </div>
-          </article>
-          <article class="panel quick-start">
-            <span class="mini-label">QUICK START</span>
-            <h2>Turn a repeatable task into an advantage.</h2>
-            <p>Tell CAGNEX what you do repeatedly. We’ll help you turn it into a workflow.</p>
-            <button class="dark-button" id="quickStartButton">Build my first workflow <span>→</span></button>
-            <div class="quote">“I got back my Friday afternoons.” <small>— Maya, Studio Koto</small></div>
-          </article>
-        </section>
-      </div>
+      <section id="workbench" class="view">
+        <div class="workbench-head"><div><div class="eyebrow">DEAL ROOM / PROJECT APOLLO</div><h1>Credit Facility Agreement <span class="badge parsing">Parsing 78%</span></h1><p>Northstar Industrial Holdings · $250.0M Term Loan B · Last synced 2 min ago</p></div><div class="work-actions"><button class="outline-btn" id="validateBtn">✓ Run compliance check</button><button class="primary-btn" id="exportBtn">⇩ Export IC memo</button></div></div>
+        <div class="health-strip"><div><span class="health-icon green-bg">✓</span><b>Math validated</b><small>42 / 42 checks passed</small></div><div><span class="health-icon amber-bg">!</span><b>3 review flags</b><small>1 critical · 2 warnings</small></div><div><span class="health-icon blue-bg">↗</span><b>6 documents</b><small>1,248 pages indexed</small></div><div class="presence"><span class="avatar">AC</span><span class="avatar blue">JM</span><span>+2 reviewing</span></div></div>
+        <div class="workbench"><div class="evidence"><div class="pane-bar"><b>Evidence canvas</b><span class="doc-tab active">Credit_Agreement_Final.pdf</span><span class="doc-tab">Borrower_Financials.xlsx</span><button>⌕</button><button>⋮</button></div><div class="page-tools"><span>Pages <b>113 / 248</b></span><button>−</button><span>100%</span><button>+</button><button>Fit</button></div><div class="document"><div class="doc-page"><div class="doc-meta">NORTHSTAR INDUSTRIAL HOLDINGS, INC. <span>Page 114</span></div><h3>SECTION 7.02. FINANCIAL COVENANTS</h3><p><b>(b) Maximum Total Net Leverage Ratio.</b> The Borrower shall not permit the Total Net Leverage Ratio as of the last day of any fiscal quarter ending during any period set forth below to exceed the ratio set forth opposite such period.</p><table><thead><tr><th>Fiscal Quarter Ending</th><th>Maximum Ratio</th></tr></thead><tbody><tr><td>September 30, 2026</td><td><mark>4.25 to 1.00</mark></td></tr><tr><td>December 31, 2026</td><td>4.00 to 1.00</td></tr><tr><td>March 31, 2027</td><td>3.75 to 1.00</td></tr></tbody></table><p><b>(c) Interest Coverage Ratio.</b> The Borrower shall not permit the Interest Coverage Ratio to be less than <mark>3.00 to 1.00</mark> as of the last day of any fiscal quarter.</p><div class="source-callout">⌁ Source linked · §7.02(b) · native text · confidence 99.8%</div></div></div><div class="thumbnails"><span class="thumb active">113</span><span class="thumb">114</span><span class="thumb">115</span><span class="thumb">116</span><span class="thumb">117</span><span class="thumb">118</span></div></div><div class="intelligence"><div class="intel-tabs"><button class="active" data-tab="covenants">Covenants <b>4</b></button><button data-tab="financials">Financials</button><button data-tab="memo">IC memo</button></div><div class="intel-body" id="covenants"><div class="section-label"><span>FINANCIAL COVENANTS</span><button>＋ Add note</button></div><div class="covenant-card critical-card" data-source="114"><div class="covenant-top"><div><span class="risk-dot red"></span><b>Maximum Total Net Leverage</b><small>Quarterly · ≤ threshold</small></div><span class="flag critical">Critical</span></div><div class="metric-line"><strong>4.25x</strong><span>Actual <b>4.18x</b></span><span class="headroom red-text">1.6% headroom</span></div><div class="bar"><i style="width:98%"></i></div><div class="stress"><span>Base <b class="green-text">4.18x</b></span><span>Downside <b class="amber-text">4.34x</b></span><span>Severe <b class="red-text">4.61x</b></span></div><footer><span>⌁ p.114 · §7.02(b)</span><button class="override" data-covenant="Maximum Total Net Leverage">Override value</button></footer></div><div class="covenant-card"><div class="covenant-top"><div><span class="risk-dot amber"></span><b>Interest Coverage Ratio</b><small>Quarterly · ≥ threshold</small></div><span class="flag warning">Watch</span></div><div class="metric-line"><strong>3.00x</strong><span>Actual <b>3.90x</b></span><span class="headroom green-text">30.0% headroom</span></div><div class="bar"><i class="green-bar" style="width:70%"></i></div><div class="stress"><span>Base <b class="green-text">3.90x</b></span><span>Downside <b class="amber-text">3.22x</b></span><span>Severe <b class="red-text">2.74x</b></span></div><footer><span>⌁ p.114 · §7.02(c)</span><button class="source-btn">View source</button></footer></div><div class="section-label financial-label"><span>RECONCILIATION SNAPSHOT</span><button data-tab-target="financials">View all →</button></div><div class="recon-row"><span>Adjusted EBITDA</span><b>$84.2M</b><span class="arrow">→</span><b class="audited">$79.6M</b><em class="negative">−5.5%</em></div><div class="recon-row"><span>Net debt</span><b>$328.4M</b><span class="arrow">→</span><b class="audited">$331.1M</b><em class="negative">+0.8%</em></div></div><div class="intel-body hidden" id="financials"><div class="section-label"><span>FINANCIAL RECONCILIATION · LTM</span><button>Export CSV</button></div><div class="financial-table"><div><span>GAAP TAG</span><span>REPORTED</span><span>AUDITED</span><span>VARIANCE</span></div><div><b>Revenue</b><span>$612.4M</span><span>$612.4M</span><em class="positive">0.0%</em></div><div><b>Adjusted EBITDA</b><span>$84.2M</span><span>$79.6M</span><em class="negative">−5.5%</em></div><div><b>Net Debt</b><span>$328.4M</span><span>$331.1M</span><em class="negative">+0.8%</em></div><div><b>Cash interest expense</b><span>$21.6M</span><span>$21.6M</span><em class="positive">0.0%</em></div></div><div class="addback"><b>Disputed add-back detected</b><span>Sponsor management fee · $2.4M</span><em>Needs approval</em></div></div><div class="intel-body hidden" id="memo"><div class="section-label"><span>IC MEMO DRAFT</span><button>Edit draft</button></div><div class="memo-draft"><h3>Executive summary</h3><p>Northstar Industrial Holdings is a leading industrial services platform with stable LTM revenue of $612.4M. The proposed $250.0M TLB is currently within covenant, though leverage headroom is narrow and breaches under the downside scenario.</p><h3>Key risks</h3><ul><li>Downside leverage breach at 4.34x vs. 4.25x threshold.</li><li>$2.4M sponsor management fee add-back requires approval.</li></ul></div></div></div></div>
+      </section>
     </main>
   </div>
-
-  <div class="modal-backdrop" id="workflowModal" hidden>
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <button class="close-button" id="closeModal" aria-label="Close">×</button>
-      <span class="modal-kicker">NEW AUTOMATION</span>
-      <h2 id="modalTitle">What should CAGNEX automate?</h2>
-      <p>Start with a workflow you repeat at least once a week.</p>
-      <form id="workflowForm">
-        <label>Workflow name<input required id="workflowName" placeholder="e.g. New client onboarding"></label>
-        <label>When should it run?<select id="workflowTrigger"><option>When a new client is added</option><option>When a proposal is viewed</option><option>When an invoice is overdue</option><option>On a recurring schedule</option></select></label>
-        <div class="form-actions"><button type="button" class="cancel-button" id="cancelModal">Cancel</button><button class="primary-button" type="submit">Create workflow →</button></div>
-      </form>
-    </div>
-  </div>
+  <div class="toast" id="toast"></div>
+  <div class="modal-backdrop" id="dealModal" hidden><div class="modal"><button class="close" id="closeDeal">×</button><span class="eyebrow">NEW DEAL ROOM</span><h2>Start a defensible underwriting file.</h2><p>Create the room first. Documents can be added and processed asynchronously.</p><label>Deal name<input id="dealName" placeholder="e.g. Project Orion"></label><label>Facility type<select><option>Term Loan B</option><option>Revolving Credit Facility</option><option>Asset Based Lending</option><option>Syndicated Facility</option></select></label><button class="primary-btn" id="createDeal">Create deal room →</button></div></div>
   <script src="app.js"></script>
 </body>
 </html>
