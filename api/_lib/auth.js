@@ -1,10 +1,13 @@
 const { jwtVerify, SignJWT } = require("jose");
 
 function getSecret() {
-  if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32) {
+  const secret = process.env.SESSION_SECRET && process.env.SESSION_SECRET.length >= 32
+    ? process.env.SESSION_SECRET
+    : process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!secret || secret.length < 32) {
     throw new Error("SESSION_SECRET must contain at least 32 characters");
   }
-  return new TextEncoder().encode(process.env.SESSION_SECRET);
+  return new TextEncoder().encode(secret);
 }
 
 async function createSession(userId) {

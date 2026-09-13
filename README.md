@@ -11,7 +11,7 @@ vercel env pull .env.local --environment=development
 vercel dev
 ```
 
-The local file must contain `DATABASE_URL`, `SESSION_SECRET` (at least 32 characters), `SUPABASE_URL`, and `SUPABASE_ANON_KEY`. Never commit `.env.local`.
+The local file must contain `DATABASE_URL`, `SESSION_SECRET` (at least 32 characters), `SUPABASE_URL`, and `SUPABASE_ANON_KEY`. The server-only `SUPABASE_SERVICE_ROLE_KEY` can securely sign sessions only as a fallback if `SESSION_SECRET` is absent. Never commit `.env.local`.
 
 ## Deploy the backend to Vercel
 
