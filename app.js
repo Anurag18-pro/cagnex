@@ -118,6 +118,61 @@
     }
   });
 
+  $("#forgot-password-button").addEventListener("click", () => {
+    $("#reset-panel").classList.toggle("hidden");
+    $("#reset-email").value = $("#email").value;
+    $("#reset-error").textContent = "";
+  });
+
+  $("#send-reset-code").addEventListener("click", async () => {
+    const email = $("#reset-email").value.trim();
+    const error = $("#reset-error");
+    error.textContent = "";
+    if (!email) {
+      error.textContent = "Enter your account email first.";
+      return;
+    }
+    const button = $("#send-reset-code");
+    button.disabled = true;
+    button.textContent = "Sending OTP…";
+    try {
+      await request("/api/auth/request-reset", { method: "POST", body: JSON.stringify({ email }) });
+      $("#otp-fields").classList.remove("hidden");
+      toast("If the account exists, an OTP has been sent by email.");
+    } catch (requestError) {
+      error.textContent = requestError.message;
+    } finally {
+      button.disabled = false;
+      button.textContent = "Send OTP";
+    }
+  });
+
+  $("#reset-password-button").addEventListener("click", async () => {
+    const error = $("#reset-error");
+    error.textContent = "";
+    const button = $("#reset-password-button");
+    button.disabled = true;
+    button.textContent = "Updating password…";
+    try {
+      const result = await request("/api/auth/reset-password", {
+        method: "POST",
+        body: JSON.stringify({
+          email: $("#reset-email").value.trim(),
+          otp: $("#reset-otp").value.trim(),
+          password: $("#reset-password").value
+        })
+      });
+      toast(result.message);
+      $("#password").value = $("#reset-password").value;
+      $("#reset-panel").classList.add("hidden");
+    } catch (requestError) {
+      error.textContent = requestError.message;
+    } finally {
+      button.disabled = false;
+      button.textContent = "Reset password";
+    }
+  });
+
   const renderDeals = (deals) => {
     $("#deal-count").textContent = deals.length;
     $("#flag-count").textContent = deals.reduce((total, deal) => total + Number(deal.flags_count || 0), 0);

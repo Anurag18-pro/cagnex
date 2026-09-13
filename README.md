@@ -20,6 +20,7 @@ Authentication uses bcrypt password hashes and a seven-day, HTTP-only, secure se
 - Explore the product without an account.
 - Register with full name, work email, phone number, and password.
 - Sign in through a secure HTTP-only session cookie.
+- Reset a forgotten password with a time-limited email OTP.
 - See an authenticated workspace with organization-scoped deal rooms.
 - Create, refresh, and open deal rooms through the backend API.
 - CEO/admin workspaces see organization-wide deal, team, and flag metrics.
@@ -27,6 +28,7 @@ Authentication uses bcrypt password hashes and a seven-day, HTTP-only, secure se
 - Client workspaces only see deals assigned to or created by that client, plus progress/payment placeholders.
 
 Role registration is intentionally restricted: only client accounts can self-register by default. Set `ALLOW_ROLE_REGISTRATION=true` only for local role-flow testing; hosted employee and admin accounts should be provisioned by an administrator.
+Password reset requires a verified sending domain plus `RESEND_API_KEY` and `RESEND_FROM_EMAIL` in Vercel. OTPs are hashed at rest, expire after ten minutes, and are never returned by the API.
 
 ## Supabase document storage
 
