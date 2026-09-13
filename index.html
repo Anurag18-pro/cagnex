@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAGNEX — Professional services automation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#">
+        <span class="brand-mark">✦</span>
+        <span>CAGNEX</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="nav-item active" href="#overview"><span>⌂</span> Overview</a>
+        <a class="nav-item" href="#workflows"><span>↯</span> Workflows <b>4</b></a>
+        <a class="nav-item" href="#clients"><span>♧</span> Clients</a>
+        <a class="nav-item" href="#activity"><span>◷</span> Activity</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="usage-card">
+          <div class="usage-title"><span>Plan usage</span><strong>68%</strong></div>
+          <div class="progress"><span></span></div>
+          <p>34 of 50 monthly runs used</p>
+          <button class="upgrade-button">Upgrade plan <span>→</span></button>
+        </div>
+        <a class="nav-item muted" href="#"><span>⚙</span> Settings</a>
+        <div class="profile">
+          <div class="avatar">AK</div>
+          <div><strong>Arjun Kapoor</strong><small>Kapoor & Co.</small></div>
+          <span class="more">•••</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="mobile-brand"><span class="brand-mark">✦</span> CAGNEX</div>
+        <div class="breadcrumb">Workspace / <strong>Overview</strong></div>
+        <div class="topbar-actions">
+          <button class="icon-button" aria-label="Notifications">♢<i></i></button>
+          <button class="help-button">? <span>Help center</span></button>
+          <button class="primary-button" id="topCreateButton">+ New workflow</button>
+        </div>
+      </header>
+
+      <div class="page-content" id="overview">
+        <section class="hero">
+          <div>
+            <p class="eyebrow">MONDAY, SEPTEMBER 14, 2026</p>
+            <h1>Good morning, Arjun <span>✦</span></h1>
+            <p class="hero-copy">Your business is moving while you focus on the work that matters.</p>
+          </div>
+          <div class="hero-sparkline" aria-label="Workflow activity rising over the last 7 days">
+            <span>Weekly runs</span>
+            <strong>+24.8%</strong>
+            <svg viewBox="0 0 160 48" role="img" aria-hidden="true">
+              <path d="M2 41 C19 38, 21 27, 36 32 S56 38, 67 25 S85 29, 96 18 S113 25, 124 11 S145 15, 158 3" />
+            </svg>
+          </div>
+        </section>
+
+        <section class="stats-grid" aria-label="Workspace metrics">
+          <article class="stat-card">
+            <div class="stat-icon purple">↯</div>
+            <div class="stat-label">Automated this month</div>
+            <strong>284 <small>runs</small></strong>
+            <span class="trend positive">↑ 18.4% <em>vs last month</em></span>
+          </article>
+          <article class="stat-card">
+            <div class="stat-icon green">◷</div>
+            <div class="stat-label">Time saved</div>
+            <strong>31.5 <small>hours</small></strong>
+            <span class="trend positive">↑ 12.2% <em>vs last month</em></span>
+          </article>
+          <article class="stat-card">
+            <div class="stat-icon orange">♧</div>
+            <div class="stat-label">Active clients</div>
+            <strong>42 <small>clients</small></strong>
+            <span class="trend neutral">— 0.0% <em>vs last month</em></span>
+          </article>
+          <article class="stat-card">
+            <div class="stat-icon blue">◉</div>
+            <div class="stat-label">Success rate</div>
+            <strong>98.7 <small>%</small></strong>
+            <span class="trend positive">↑ 2.1% <em>vs last month</em></span>
+          </article>
+        </section>
+
+        <section class="section-heading" id="workflows">
+          <div>
+            <h2>Your workflows</h2>
+            <p>Automations that keep your client work moving.</p>
+          </div>
+          <div class="section-actions">
+            <label class="search"><span>⌕</span><input id="workflowSearch" type="search" placeholder="Search workflows"></label>
+            <button class="filter-button">☷ <span>Filter</span></button>
+            <button class="outline-button" id="createButton">+ Create workflow</button>
+          </div>
+        </section>
+
+        <section class="workflow-list" id="workflowList"></section>
+
+        <section class="lower-grid">
+          <article class="panel" id="activity">
+            <div class="panel-heading"><div><h2>Recent activity</h2><p>What your workspace has been up to.</p></div><a href="#">View all →</a></div>
+            <div class="activity-list">
+              <div class="activity-item"><span class="activity-dot purple">↯</span><div><strong>Client onboarding</strong> ran for <b>Northstar Labs</b><small>2 minutes ago · Completed successfully</small></div><span class="success">Done</span></div>
+              <div class="activity-item"><span class="activity-dot orange">✉</span><div><strong>Proposal follow-up</strong> sent to <b>Priya Mehta</b><small>28 minutes ago · Email delivered</small></div><span class="success">Done</span></div>
+              <div class="activity-item"><span class="activity-dot blue">▣</span><div><strong>Invoice reminder</strong> scheduled for <b>Studio Koto</b><small>1 hour ago · Due in 2 days</small></div><span class="pending">Queued</span></div>
+            </div>
+          </article>
+          <article class="panel quick-start">
+            <span class="mini-label">QUICK START</span>
+            <h2>Turn a repeatable task into an advantage.</h2>
+            <p>Tell CAGNEX what you do repeatedly. We’ll help you turn it into a workflow.</p>
+            <button class="dark-button" id="quickStartButton">Build my first workflow <span>→</span></button>
+            <div class="quote">“I got back my Friday afternoons.” <small>— Maya, Studio Koto</small></div>
+          </article>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="workflowModal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="close-button" id="closeModal" aria-label="Close">×</button>
+      <span class="modal-kicker">NEW AUTOMATION</span>
+      <h2 id="modalTitle">What should CAGNEX automate?</h2>
+      <p>Start with a workflow you repeat at least once a week.</p>
+      <form id="workflowForm">
+        <label>Workflow name<input required id="workflowName" placeholder="e.g. New client onboarding"></label>
+        <label>When should it run?<select id="workflowTrigger"><option>When a new client is added</option><option>When a proposal is viewed</option><option>When an invoice is overdue</option><option>On a recurring schedule</option></select></label>
+        <div class="form-actions"><button type="button" class="cancel-button" id="cancelModal">Cancel</button><button class="primary-button" type="submit">Create workflow →</button></div>
+      </form>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
